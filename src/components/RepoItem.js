@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import sprite from 'sprite.svg';
 import COLOR from 'styles/color';
 import LanguageColors from 'styles/langColors';
 import Svg from 'components/Svg';
@@ -56,8 +57,31 @@ const StyledSvg = styled(Svg)`
   height: 1.5rem;
 `;
 
-const RepoItem = () => {
+/**
+ * @param {{repo:import('type').Repo}} props
+ */
+const RepoItem = ({ repo }) => {
+  const { name, description, language, stargazers_count, forks_count } = repo;
 
-}
+  return (
+    <Item>
+      <h2>
+        <RepoLink to={name}>{name}</RepoLink>
+      </h2>
+      {description && <p>{description}</p>}
+      <Infos>
+        {language && <Language language={language}>{language}</Language>}
+        <Icon>
+          <StyledSvg href={`${sprite}#icon-star-empty`} />
+          {stargazers_count}
+        </Icon>
+        <Icon>
+          <StyledSvg href={`${sprite}#icon-folk`} />
+          {forks_count}
+        </Icon>
+      </Infos>
+    </Item>
+  );
+};
 
 export default RepoItem;

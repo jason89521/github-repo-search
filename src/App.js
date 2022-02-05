@@ -25,13 +25,13 @@ const Panel = styled.div`
 `;
 
 /**
- * @type {React.Context<import('type').Repos[]>}
+ * @type {React.Context<import('type').Repo[]>}
  */
 export const ReposContext = React.createContext([]);
 
 const App = () => {
   /**
-   * @type {[import('type').Repos[], React.Dispatch<React.SetStateAction<any[]>>]}
+   * @type {[import('type').Repo[], React.Dispatch<React.SetStateAction<any[]>>]}
    */
   const [repos, setRepos] = useState([]);
   const navigate = useNavigate();

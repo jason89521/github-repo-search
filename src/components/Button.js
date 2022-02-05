@@ -12,6 +12,11 @@ const Container = styled.button`
   font-weight: 700;
   font-size: 2rem;
   letter-spacing: 1px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #70a1ff;
+  }
 `
 
 const Button = ({className, children}) => {

@@ -15,6 +15,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Roboto Mono', monospace;
     line-height: 1.6;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default GlobalStyles;

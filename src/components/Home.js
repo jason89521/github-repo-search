@@ -23,9 +23,14 @@ const Header = styled.header`
 
 const StyledSvg = styled(Svg)`
   width: 15rem;
+  fill: #fff;
 `;
 
-const Home = () => {
+/**
+ * @param {{onFormSubmit:(data: [], username: string)=>void}} props
+ * @returns
+ */
+const Home = ({ onFormSubmit }) => {
   return (
     <Container>
       <Header>
@@ -34,7 +39,7 @@ const Home = () => {
       </Header>
 
       <main>
-        <Form />
+        <Form onFormSubmit={onFormSubmit} />
       </main>
     </Container>
   );

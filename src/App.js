@@ -3,9 +3,9 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
 import COLOR from 'styles/color';
-import Home from 'components/Home';
-import Repos from 'components/Repos';
-import Repo from 'components/Repo';
+import Home from 'pages/Home';
+import Repos from 'pages/Repos';
+import Repo from 'pages/Repo';
 
 const Container = styled.div`
   padding: 5rem 0;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Button from 'components/Button';
-import githubApi from 'githubApi';
+import {fetchRepos} from 'githubApi';
 import { useState } from 'react';
 
 const Container = styled.form`
@@ -38,7 +38,7 @@ const Form = ({onFormSubmit}) => {
     e.preventDefault();
     let response;
     try {
-      response = await githubApi.get(`/users/${username}/repos`);
+      response = await fetchRepos(username);
     } catch (error) {
       console.error(error);
     }

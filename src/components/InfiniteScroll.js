@@ -9,7 +9,6 @@ const InfiniteScroll = ({ hasMore, children, next, isLoading }) => {
 
     // Should wait for all dependencies to be debounced.
     const timeoutId = setTimeout(() => {
-      console.log('call next...');
       next();
     }, 500);
     return () => clearTimeout(timeoutId);

@@ -7,7 +7,7 @@ import Layout from 'components/Layout';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
-import githubApi from 'githubApi';
+import { fetchRepos } from 'githubApi';
 
 const Container = styled.div`
   padding: 5rem 0;
@@ -49,15 +49,12 @@ const App = () => {
     setPageNumber(1);
     setHasMore(data.length > 0);
     setIsLoading(false);
-    console.log(data);
   };
 
   const fetchNext = async () => {
     setIsLoading(true);
     try {
-      const response = await githubApi.get(`/users/${username}/repos`, {
-        params: { page: pageNumber + 1 },
-      });
+      const response = await fetchRepos(username, pageNumber + 1);
       setRepos([...repos, ...response.data]);
       setPageNumber(pageNumber + 1);
       setHasMore(response.data.length > 0);
@@ -65,7 +62,6 @@ const App = () => {
       console.error(error);
     }
     setIsLoading(false);
-    console.log('data loaded');
   };
 
   return (

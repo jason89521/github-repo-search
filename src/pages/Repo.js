@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import githubApi from 'githubApi';
+import {fetchFiles, fetchRepo} from 'githubApi';
 import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
-import Color from 'styles/color';
 import FilesList from 'components/FilesList';
 
 const Container = styled.div`
@@ -34,8 +33,8 @@ const Repo = () => {
   useEffect(() => {
     const fetchRepoData = async () => {
       try {
-        const { data } = await githubApi.get(`repos/${username}/${repo}`);
-        const { data: contents } = await githubApi.get(`repos/${username}/${repo}/contents`);
+        const { data } = await fetchRepo(username, repo)
+        const { data: contents } = await fetchFiles(username, repo);
         setRepoData(data);
         setFiles(
           contents.sort((a, b) => {

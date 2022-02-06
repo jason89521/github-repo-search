@@ -26,11 +26,6 @@ const Panel = styled.div`
   color: ${Color.text};
 `;
 
-/**
- * @type {React.Context<import('type').Repo[]>}
- */
-export const ReposContext = React.createContext([]);
-
 const App = () => {
   /**
    * @type {[import('type').Repo[], React.Dispatch<React.SetStateAction<any[]>>]}
@@ -65,22 +60,20 @@ const App = () => {
   };
 
   return (
-    <ReposContext.Provider value={repos}>
-      <Container>
-        <Panel>
-          <Routes>
-            <Route path="/" element={<Home onFormSubmit={onFormSubmit} />} />
-            <Route path="users/:username/repos" element={<Layout />}>
-              <Route
-                index
-                element={<Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} />}
-              />
-              <Route path=":repo" element={<Repo />} />
-            </Route>
-          </Routes>
-        </Panel>
-      </Container>
-    </ReposContext.Provider>
+    <Container>
+      <Panel>
+        <Routes>
+          <Route path="/" element={<Home onFormSubmit={onFormSubmit} />} />
+          <Route path="users/:username/repos" element={<Layout />}>
+            <Route
+              index
+              element={<Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} repos={repos} />}
+            />
+            <Route path=":repo" element={<Repo />} />
+          </Route>
+        </Routes>
+      </Panel>
+    </Container>
   );
 };
 

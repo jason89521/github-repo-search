@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { useContext } from 'react';
 
-import { ReposContext } from 'App';
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
 
@@ -17,8 +15,7 @@ const List = styled.ul`
   height: 100%;
 `;
 
-const Repos = ({ fetchNext, isLoading, hasMore }) => {
-  const repos = useContext(ReposContext);
+const Repos = ({ fetchNext, isLoading, hasMore, repos }) => {
   const { username } = useParams();
 
   const renderedRepos = repos.map((repo, index) => {

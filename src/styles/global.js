@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import Color from './color';
+import breakpoints from './breakpoints';
 
 const GlobalStyles = createGlobalStyle`
   *,
@@ -15,6 +16,10 @@ const GlobalStyles = createGlobalStyle`
     font-size:62.5%;
     font-family: 'Roboto Mono', monospace;
     line-height: 1.6;
+
+    @media (max-width: ${breakpoints.medium}) {
+      font-size: 50%;
+    }
   }
 
   ul {

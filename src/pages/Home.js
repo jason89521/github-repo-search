@@ -20,6 +20,7 @@ const Header = styled.header`
 
   h1 {
     font-size: 3rem;
+    text-align: center;
   }
 `;
 

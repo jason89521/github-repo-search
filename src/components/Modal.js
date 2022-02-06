@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 import Color from 'styles/color';
 
 const Container = styled.div`
-  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
@@ -19,6 +18,11 @@ const Container = styled.div`
 
 const modalRoot = document.getElementById('modal-root');
 
+/**
+ * @param {{
+ * children: React.ReactNode[]
+ * }} props
+ */
 const Modal = ({ children }) => {
   const elRef = useRef(document.createElement('div'));
 
@@ -30,7 +34,6 @@ const Modal = ({ children }) => {
   }, []);
 
   const renderedContent = <Container>{children}</Container>;
-
   return ReactDOM.createPortal(renderedContent, elRef.current);
 };
 

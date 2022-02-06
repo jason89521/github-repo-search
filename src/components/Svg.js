@@ -6,6 +6,7 @@ const Container = styled.svg`
   height: 2rem;
 `;
 
+// Use sprite.svg
 const Svg = ({ className, href }) => {
   return (
     <Container className={className}>

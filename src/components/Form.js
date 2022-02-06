@@ -26,7 +26,6 @@ const Input = styled.input`
 
 /**
  * @param {{onFormSubmit:(username: string)=>void}} props
- * @returns
  */
 const Form = ({ onFormSubmit }) => {
   const [username, setUsername] = useState('');

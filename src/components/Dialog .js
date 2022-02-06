@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Color from 'styles/color';
 import Button from 'components/Button';
+import React from 'react';
 
 const Container = styled.div`
   padding: 3rem 0;
@@ -26,7 +27,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Dialog = ({message, onClick}) => {
+/**
+ * @param {{
+ * message: string,
+ * onClick: React.MouseEventHandler
+ * }} props
+ */
+const Dialog = ({ message, onClick }) => {
   return (
     <Container>
       {message}

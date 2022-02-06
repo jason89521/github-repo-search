@@ -29,7 +29,12 @@ const StyledSvg = styled(Svg)`
 `;
 
 /**
- * @param {{onFormSubmit:(data: [], username: string)=>void}} props
+ * @param {{
+ * onFormSubmit:(data: [], username: string)=>void,
+ * isModalShow: boolean,
+ * errorMsg: string,
+ * hideModal: () => void,
+ * }} props
  */
 const Home = ({ onFormSubmit, isModalShow, errorMsg, hideModal }) => {
   return (

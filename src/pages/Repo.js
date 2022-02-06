@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import {fetchFiles, fetchRepo} from 'githubApi';
+import { fetchFiles, fetchRepo } from 'githubApi';
 import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import FilesList from 'components/FilesList';
@@ -26,31 +26,33 @@ const Heading = styled.h1`
 `;
 
 const Repo = () => {
-  const { username, repo } = useParams();
-  const [repoData, setRepoData] = useState({});
+  const params = useParams();
+  const [repo, setRepo] = useState({});
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
     const fetchRepoData = async () => {
+      let repoData;
+      let contentsData;
       try {
-        const { data } = await fetchRepo(username, repo)
-        const { data: contents } = await fetchFiles(username, repo);
-        setRepoData(data);
-        setFiles(
-          contents.sort((a, b) => {
-            if (a.type === 'dir') return b.type === 'dir' ? 0 : -1;
-            return b.type === 'dir' ? 1 : 0;
-          })
-        );
+        repoData = (await fetchRepo(params.username, params.repo)).data;
+        contentsData = (await fetchFiles(params.username, params.repo)).data;
       } catch (error) {
         console.error(error);
       }
+
+      setRepo(repoData);
+      const sortedContents = contentsData.sort((a, b) => {
+        if (a.type === 'dir') return b.type === 'dir' ? 0 : -1;
+        return b.type === 'dir' ? 1 : 0;
+      });
+      setFiles(sortedContents);
     };
 
     fetchRepoData();
-  }, [username, repo]);
+  }, [params]);
 
-  const { full_name, description, stargazers_count, html_url } = repoData;
+  const { full_name, description, stargazers_count, html_url } = repo;
 
   return (
     <Container>

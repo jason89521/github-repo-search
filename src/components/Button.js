@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.button`
@@ -19,6 +20,13 @@ const Container = styled.button`
   }
 `;
 
+/**
+ * @param {{
+ * className: string,
+ * children: React.ReactNode[]
+ * onClick: React.MouseEventHandler
+ * }} props
+ */
 const Button = ({ className, children, onClick }) => {
   return (
     <Container className={className} onClick={onClick}>

@@ -15,10 +15,18 @@ const List = styled.ul`
   height: 100%;
 `;
 
+/**
+ * @param {{
+ * fetchNext: () => void,
+ * isLoading: boolean,
+ * hasMore: boolean,
+ * repos: import('type').Repo[]
+ * }} props
+ */
 const Repos = ({ fetchNext, isLoading, hasMore, repos }) => {
   const { username } = useParams();
 
-  const renderedRepos = repos.map((repo, index) => {
+  const renderedRepos = repos.map(repo => {
     return <RepoItem key={repo.id} repo={repo} />;
   });
 

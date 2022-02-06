@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react';
 import { useIntersection } from '@yuxuan-zheng/hooks';
 
+/**
+ * @param {{
+ * hasMore: boolean,
+ * children: React.ReactNode[],
+ * next: () => void,
+ * isLoading: boolean,
+ * }} props
+ */
 const InfiniteScroll = ({ hasMore, children, next, isLoading }) => {
   const [isBottom, lastRef] = useIntersection();
 

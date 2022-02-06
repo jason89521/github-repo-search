@@ -18,7 +18,7 @@ const githubApi = axios.create({
  */
 export const fetchRepos = (username, pageNumber = 1) => {
   return githubApi.get(`/users/${username}/repos`, {
-    params: { page: pageNumber + 1 },
+    params: { page: pageNumber },
   });
 };
 

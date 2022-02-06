@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import Form from 'components/Form';
+import Modal from 'components/Modal';
+import Dialog from 'components/Dialog ';
 
 const Container = styled.div`
   display: flex;
@@ -28,19 +30,22 @@ const StyledSvg = styled(Svg)`
 
 /**
  * @param {{onFormSubmit:(data: [], username: string)=>void}} props
- * @returns
  */
-const Home = ({ onFormSubmit }) => {
+const Home = ({ onFormSubmit, isModalShow, errorMsg, hideModal }) => {
   return (
     <Container>
+      {isModalShow ? (
+        <Modal>
+          <Dialog message={errorMsg} onClick={hideModal} />
+        </Modal>
+      ) : null}
+
       <Header>
         <StyledSvg href={`${sprite}#icon-github`}></StyledSvg>
         <h1>Github Repositories</h1>
       </Header>
 
-      <main>
-        <Form onFormSubmit={onFormSubmit} />
-      </main>
+      <Form onFormSubmit={onFormSubmit} />
     </Container>
   );
 };

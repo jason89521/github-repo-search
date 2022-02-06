@@ -35,20 +35,30 @@ const App = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
   const onFormSubmit = async newUsername => {
+    let data;
     try {
-      const { data } = await fetchRepos(newUsername);
-      setRepos(data);
-      setUsername(newUsername);
-      setPageNumber(1);
-      setHasMore(data.length > 0);
-      setIsLoading(false);
-      navigate(`/users/${newUsername}/repos`);
+      const response = await fetchRepos(newUsername);
+      data = response.data;
     } catch (error) {
-      console.error();
+      const response = error.response;
+      if (response) {
+        setErrorMsg(response.data.message);
+        setIsModalShow(true);
+      }
+      return;
     }
+
+    setRepos(data);
+    setHasMore(data.length > 0);
+    setUsername(newUsername);
+    setPageNumber(1);
+    setIsLoading(false);
+    navigate(`/users/${newUsername}/repos`);
   };
 
   const fetchNext = async () => {
@@ -64,11 +74,25 @@ const App = () => {
     setIsLoading(false);
   };
 
+  const hideModal = () => {
+    setIsModalShow(false);
+  };
+
   return (
     <Container>
       <Panel>
         <Routes>
-          <Route path="/" element={<Home onFormSubmit={onFormSubmit} />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                onFormSubmit={onFormSubmit}
+                errorMsg={errorMsg}
+                isModalShow={isModalShow}
+                hideModal={hideModal}
+              />
+            }
+          />
           <Route path="users/:username/repos" element={<Layout />}>
             <Route
               index

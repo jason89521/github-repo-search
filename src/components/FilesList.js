@@ -11,6 +11,9 @@ const List = styled.ul`
 
 const Item = styled.li`
   padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
   &:not(:last-child) {
     border-bottom: 1px solid ${Color.gray};

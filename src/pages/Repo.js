@@ -37,7 +37,12 @@ const Repo = () => {
         const { data } = await githubApi.get(`repos/${username}/${repo}`);
         const { data: contents } = await githubApi.get(`repos/${username}/${repo}/contents`);
         setRepoData(data);
-        setFiles(contents);
+        setFiles(
+          contents.sort((a, b) => {
+            if (a.type === 'dir') return b.type === 'dir' ? 0 : -1;
+            return b.type === 'dir' ? 1 : 0;
+          })
+        );
       } catch (error) {
         console.error(error);
       }

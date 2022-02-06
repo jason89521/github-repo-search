@@ -17,14 +17,14 @@ const Container = styled.button`
   &:hover {
     background-color: #70a1ff;
   }
-`
+`;
 
-const Button = ({className, children}) => {
+const Button = ({ className, children, onClick }) => {
   return (
-    <Container className={className}>
+    <Container className={className} onClick={onClick}>
       {children}
     </Container>
-  )
+  );
 };
 
 export default Button;

@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
 import COLOR from 'styles/color';
+import Layout from 'components/Layout';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
@@ -73,11 +74,13 @@ const App = () => {
         <Panel>
           <Routes>
             <Route path="/" element={<Home onFormSubmit={onFormSubmit} />} />
-            <Route
-              path="users/:username/repos"
-              element={<Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} />}
-            />
-            <Route path="users/:username/repos/:repo" element={<Repo />} />
+            <Route path="users/:username/repos" element={<Layout />}>
+              <Route
+                index
+                element={<Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} />}
+              />
+              <Route path=":reponame" element={<Repo />} />
+            </Route>
           </Routes>
         </Panel>
       </Container>

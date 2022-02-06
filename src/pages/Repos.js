@@ -1,29 +1,16 @@
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
 
 import COLOR from 'styles/color';
 import { ReposContext } from 'App';
-import Button from 'components/Button';
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
-
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-`;
 
 const Heading = styled.h1`
   text-align: center;
   font-size: 5rem;
   color: ${COLOR.text};
-`;
-
-const BackLink = styled(Link)`
-  position: absolute;
-  top: 2rem;
 `;
 
 const List = styled.ul`
@@ -33,7 +20,7 @@ const List = styled.ul`
   height: 100%;
 `;
 
-const Repos = ({fetchNext, isLoading, hasMore}) => {
+const Repos = ({ fetchNext, isLoading, hasMore }) => {
   const repos = useContext(ReposContext);
   const { username } = useParams();
 
@@ -42,10 +29,7 @@ const Repos = ({fetchNext, isLoading, hasMore}) => {
   });
 
   return (
-    <Container>
-      <BackLink to="/">
-        <Button>Back</Button>
-      </BackLink>
+    <>
       <header>
         <Heading>{username}</Heading>
       </header>
@@ -55,7 +39,7 @@ const Repos = ({fetchNext, isLoading, hasMore}) => {
           <List>{renderedRepos}</List>
         </InfiniteScroll>
       </main>
-    </Container>
+    </>
   );
 };
 

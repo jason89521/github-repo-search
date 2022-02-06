@@ -7,16 +7,37 @@ const githubApi = axios.create({
   },
 });
 
+/** @typedef {import('axios').AxiosResponse} AxiosResponse */
+
+/** @typedef {import('type').Repo} Repo */
+
+/** @typedef {import('type').File} File */
+
+/**
+ * @param {string} username
+ * @param {number} pageNumber
+ * @returns {Promise<AxiosResponse<Repo[], any>>}
+ */
 export const fetchRepos = (username, pageNumber = 1) => {
   return githubApi.get(`/users/${username}/repos`, {
     params: { page: pageNumber + 1 },
   });
 };
 
+/**
+ * @param {string} username
+ * @param {string} repo
+ * @returns {Promise<AxiosResponse<Repo, any>>}
+ */
 export const fetchRepo = (username, repo) => {
   return githubApi.get(`repos/${username}/${repo}`);
 };
 
+/**
+ * @param {string} username
+ * @param {string} repo
+ * @returns {Promise<AxiosResponse<File[], any>>}
+ */
 export const fetchFiles = (username, repo) => {
   return githubApi.get(`repos/${username}/${repo}/contents`);
 };

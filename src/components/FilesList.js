@@ -28,6 +28,10 @@ const FileLink = styled.a`
   }
 `;
 
+/**
+ * @param {{files: import('type').File[]}} props
+ * @returns
+ */
 const FilesList = ({ files }) => {
   return (
     <List>

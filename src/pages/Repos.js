@@ -6,12 +6,12 @@ import COLOR from 'styles/color';
 import { ReposContext } from 'App';
 import Button from 'components/Button';
 import RepoItem from 'components/RepoItem';
+import InfiniteScroll from 'components/InfiniteScroll';
 
 const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
   gap: 3rem;
 `;
 
@@ -33,7 +33,7 @@ const List = styled.ul`
   height: 100%;
 `;
 
-const Repos = () => {
+const Repos = ({fetchNext, isLoading, hasMore}) => {
   const repos = useContext(ReposContext);
   const { username } = useParams();
 
@@ -51,7 +51,9 @@ const Repos = () => {
       </header>
 
       <main>
-        <List>{renderedRepos}</List>
+        <InfiniteScroll next={fetchNext} isLoading={isLoading} hasMore={hasMore}>
+          <List>{renderedRepos}</List>
+        </InfiniteScroll>
       </main>
     </Container>
   );

@@ -6,6 +6,7 @@ import COLOR from 'styles/color';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
+import githubApi from 'githubApi';
 
 const Container = styled.div`
   padding: 5rem 0;
@@ -34,12 +35,36 @@ const App = () => {
    * @type {[import('type').Repo[], React.Dispatch<React.SetStateAction<any[]>>]}
    */
   const [repos, setRepos] = useState([]);
+  const [username, setUsername] = useState('');
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
   const navigate = useNavigate();
 
-  const onFormSubmit = (data, username) => {
-    navigate(`/users/${username}/repos`);
+  const onFormSubmit = (data, newUsername) => {
+    navigate(`/users/${newUsername}/repos`);
     setRepos(data);
+    setUsername(newUsername);
+    setPageNumber(1);
+    setHasMore(data.length > 0);
+    setIsLoading(false);
     console.log(data);
+  };
+
+  const fetchNext = async () => {
+    setIsLoading(true);
+    try {
+      const response = await githubApi.get(`/users/${username}/repos`, {
+        params: { page: pageNumber + 1 },
+      });
+      setRepos([...repos, ...response.data]);
+      setPageNumber(pageNumber + 1);
+      setHasMore(response.data.length > 0);
+    } catch (error) {
+      console.error(error);
+    }
+    setIsLoading(false);
+    console.log('data loaded');
   };
 
   return (
@@ -48,7 +73,10 @@ const App = () => {
         <Panel>
           <Routes>
             <Route path="/" element={<Home onFormSubmit={onFormSubmit} />} />
-            <Route path="users/:username/repos" element={<Repos />} />
+            <Route
+              path="users/:username/repos"
+              element={<Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} />}
+            />
             <Route path="users/:username/repos/:repo" element={<Repo />} />
           </Routes>
         </Panel>

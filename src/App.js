@@ -37,13 +37,18 @@ const App = () => {
   const [hasMore, setHasMore] = useState(false);
   const navigate = useNavigate();
 
-  const onFormSubmit = (data, newUsername) => {
-    navigate(`/users/${newUsername}/repos`);
-    setRepos(data);
-    setUsername(newUsername);
-    setPageNumber(1);
-    setHasMore(data.length > 0);
-    setIsLoading(false);
+  const onFormSubmit = async newUsername => {
+    try {
+      const { data } = await fetchRepos(newUsername);
+      setRepos(data);
+      setUsername(newUsername);
+      setPageNumber(1);
+      setHasMore(data.length > 0);
+      setIsLoading(false);
+      navigate(`/users/${newUsername}/repos`);
+    } catch (error) {
+      console.error();
+    }
   };
 
   const fetchNext = async () => {
@@ -67,7 +72,14 @@ const App = () => {
           <Route path="users/:username/repos" element={<Layout />}>
             <Route
               index
-              element={<Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} repos={repos} />}
+              element={
+                <Repos
+                  fetchNext={fetchNext}
+                  isLoading={isLoading}
+                  hasMore={hasMore}
+                  repos={repos}
+                />
+              }
             />
             <Route path=":repo" element={<Repo />} />
           </Route>

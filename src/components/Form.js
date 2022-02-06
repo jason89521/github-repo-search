@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import Button from 'components/Button';
-import {fetchRepos} from 'githubApi';
 import { useState } from 'react';
 
 const Container = styled.form`
@@ -26,24 +25,17 @@ const Input = styled.input`
 `;
 
 /**
- * @param {{onFormSubmit:(data: [], username: string)=>void}} props 
- * @returns 
+ * @param {{onFormSubmit:(username: string)=>void}} props
+ * @returns
  */
-const Form = ({onFormSubmit}) => {
+const Form = ({ onFormSubmit }) => {
   const [username, setUsername] = useState('');
 
   const handleChange = e => setUsername(e.target.value);
 
   const handleSubmit = async e => {
     e.preventDefault();
-    let response;
-    try {
-      response = await fetchRepos(username);
-    } catch (error) {
-      console.error(error);
-    }
-
-    onFormSubmit(response.data, username);
+    onFormSubmit(username);
   };
 
   return (

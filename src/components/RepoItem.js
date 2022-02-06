@@ -33,7 +33,7 @@ const Language = styled.span`
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    background-color: ${props => LanguageColors[props.language.toLowerCase()]};
+    background-color: ${props => LanguageColors[props.language]};
   }
 `;
 

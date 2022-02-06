@@ -23,7 +23,7 @@ const Header = styled.header`
 
 const StyledSvg = styled(Svg)`
   width: 15rem;
-  fill: #fff;
+  height: 15rem;
 `;
 
 /**

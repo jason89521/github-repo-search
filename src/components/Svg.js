@@ -1,8 +1,16 @@
+import styled from 'styled-components';
+
+const Container = styled.svg`
+  fill: #fff;
+  width: 2rem;
+  height: 2rem;
+`;
+
 const Svg = ({ className, href }) => {
   return (
-    <svg className={className}>
+    <Container className={className}>
       <use href={href}></use>
-    </svg>
+    </Container>
   );
 };
 

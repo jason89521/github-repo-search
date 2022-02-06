@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import Color from './color';
 
 const GlobalStyles = createGlobalStyle`
   *,
@@ -16,8 +17,17 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1.6;
   }
 
+  ul {
+    list-style: none;
+  }
+
   a {
     text-decoration: none;
+    color: ${Color.link};
+
+    &:hover {
+    text-decoration: underline;
+    }
   }
 `;
 

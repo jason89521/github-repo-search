@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import sprite from 'sprite.svg';
-import COLOR from 'styles/color';
+import Color from 'styles/color';
 import LanguageColors from 'styles/langColors';
 import Svg from 'components/Svg';
 
@@ -12,15 +12,7 @@ const Item = styled.li`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border-bottom: 1px solid ${COLOR.foreground};
-`;
-
-const RepoLink = styled(Link)`
-  color: ${COLOR.link};
-
-  &:hover {
-    text-decoration: underline;
-  }
+  border-bottom: 1px solid ${Color.gray};
 `;
 
 const Infos = styled.div`
@@ -52,7 +44,6 @@ const Icon = styled.span`
 `;
 
 const StyledSvg = styled(Svg)`
-  fill: ${COLOR.foreground};
   width: 1.5rem;
   height: 1.5rem;
 `;
@@ -66,7 +57,7 @@ const RepoItem = ({ repo }) => {
   return (
     <Item>
       <h2>
-        <RepoLink to={name}>{name}</RepoLink>
+        <Link to={name}>{name}</Link>
       </h2>
       {description && <p>{description}</p>}
       <Infos>

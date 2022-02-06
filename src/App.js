@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
-import COLOR from 'styles/color';
+import Color from 'styles/color';
 import Layout from 'components/Layout';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
@@ -22,8 +22,8 @@ const Panel = styled.div`
   width: 60%;
   padding: 5rem;
   border-radius: 10px;
-  background-color: ${COLOR.background};
-  color: ${COLOR.text};
+  background-color: ${Color.background};
+  color: ${Color.text};
 `;
 
 /**
@@ -79,7 +79,7 @@ const App = () => {
                 index
                 element={<Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} />}
               />
-              <Route path=":reponame" element={<Repo />} />
+              <Route path=":repo" element={<Repo />} />
             </Route>
           </Routes>
         </Panel>

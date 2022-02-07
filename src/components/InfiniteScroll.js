@@ -13,6 +13,7 @@ const InfiniteScroll = ({ hasMore, children, next, isLoading }) => {
   const [isBottom, lastRef] = useIntersection();
 
   useEffect(() => {
+    console.table([ isBottom, isLoading, hasMore ]);
     if (!isBottom || isLoading || !hasMore) return;
 
     // Should wait for all dependencies to be debounced.

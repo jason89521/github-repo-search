@@ -5,6 +5,7 @@ import sprite from 'sprite.svg';
 import Color from 'styles/color';
 import LanguageColors from 'styles/langColors';
 import Svg from 'components/Svg';
+import breakpoints from 'styles/breakpoints';
 
 const Item = styled.li`
   padding: 3rem 2rem;
@@ -13,6 +14,10 @@ const Item = styled.li`
   flex-direction: column;
   gap: 1rem;
   border-bottom: 1px solid ${Color.gray};
+
+  @media (max-width: ${breakpoints.medium}) {
+    padding: 2rem 0;
+  }
 `;
 
 const Infos = styled.div`

@@ -1,52 +1,14 @@
-import styled from 'styled-components';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
-import Color from 'styles/color';
-import Layout from 'components/Layout';
+import Layout from 'components/InnerLayout';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
+import OuterLayout from 'components/OuterLayout';
 import { fetchRepos } from 'githubApi';
-import breakpoints from 'styles/breakpoints';
-
-const Container = styled.div`
-  padding: 5rem 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  background-color: #2f3542;
-  overflow: auto;
-
-  @media (max-width: ${breakpoints.large}) {
-    padding: 0;
-  }
-`;
-
-const Panel = styled.div`
-  width: 60%;
-  padding: 5rem;
-  border-radius: 10px;
-  background-color: ${Color.background};
-  color: ${Color.text};
-
-  @media (max-width: ${breakpoints.largest}) {
-    width: 80%;
-  }
-
-  @media (max-width: ${breakpoints.large}) {
-    width: 100%;
-  }
-
-  @media (max-width: ${breakpoints.small}) {
-    padding: 2.5rem;
-  }
-`;
 
 const App = () => {
-  /**
-   * @type {[import('type').Repo[], React.Dispatch<React.SetStateAction<any[]>>]}
-   */
   const [repos, setRepos] = useState([]);
   const [username, setUsername] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
@@ -96,37 +58,30 @@ const App = () => {
   };
 
   return (
-    <Container>
-      <Panel>
-        <Routes>
+    <OuterLayout>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              onFormSubmit={onFormSubmit}
+              errorMsg={errorMsg}
+              isModalShow={isModalShow}
+              hideModal={hideModal}
+            />
+          }
+        />
+        <Route path="users/:username/repos" element={<Layout />}>
           <Route
-            path="/"
+            index
             element={
-              <Home
-                onFormSubmit={onFormSubmit}
-                errorMsg={errorMsg}
-                isModalShow={isModalShow}
-                hideModal={hideModal}
-              />
+              <Repos fetchNext={fetchNext} isLoading={isLoading} hasMore={hasMore} repos={repos} />
             }
           />
-          <Route path="users/:username/repos" element={<Layout />}>
-            <Route
-              index
-              element={
-                <Repos
-                  fetchNext={fetchNext}
-                  isLoading={isLoading}
-                  hasMore={hasMore}
-                  repos={repos}
-                />
-              }
-            />
-            <Route path=":repo" element={<Repo />} />
-          </Route>
-        </Routes>
-      </Panel>
-    </Container>
+          <Route path=":repo" element={<Repo />} />
+        </Route>
+      </Routes>
+    </OuterLayout>
   );
 };
 

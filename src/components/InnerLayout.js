@@ -13,7 +13,7 @@ const StyledButton = styled(Button)`
   align-self: center;
 `;
 
-const Layout = () => {
+const InnerLayout = () => {
   const navigate = useNavigate();
 
   return (
@@ -24,4 +24,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default InnerLayout;

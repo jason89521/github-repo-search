@@ -1,3 +1,4 @@
+import type { File } from 'type';
 import styled from 'styled-components';
 
 import Sprite from 'sprite.svg';
@@ -28,10 +29,11 @@ const FileLink = styled.a`
   }
 `;
 
-/**
- * @param {{files: import('type').File[]}} props
- */
-const FilesList = ({ files }) => {
+type PropsType = {
+  files: File[];
+};
+
+const FilesList = ({ files }: PropsType) => {
   return (
     <List>
       {files &&

@@ -37,10 +37,10 @@ const Panel = styled.div`
   }
 `;
 
-/**
- * @param {{children: React.ReactNode[]}} props
- */
-const OuterLayout = ({ children }) => {
+type PropsType = {
+  children: React.ReactNode[] | React.ReactNode;
+};
+const OuterLayout = ({ children }: PropsType) => {
   return (
     <Container>
       <Panel>{children}</Panel>

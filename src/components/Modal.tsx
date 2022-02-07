@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Color from 'styles/color';
 
 const Container = styled.div`
@@ -16,21 +16,22 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const modalRoot = document.getElementById('modal-root');
+const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
 
-/**
- * @param {{
- * children: React.ReactNode[]
- * }} props
- */
-const Modal = ({ children }) => {
+type PropsType = {
+  children: React.ReactNode[] | React.ReactNode;
+};
+
+const Modal = ({ children }: PropsType) => {
   const elRef = useRef(document.createElement('div'));
 
   useEffect(() => {
     const el = elRef.current;
     modalRoot.appendChild(el);
 
-    return () => modalRoot.removeChild(el);
+    return () => {
+      modalRoot.removeChild(el);
+    };
   }, []);
 
   const renderedContent = <Container>{children}</Container>;

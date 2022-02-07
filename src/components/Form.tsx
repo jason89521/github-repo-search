@@ -24,15 +24,16 @@ const Input = styled.input`
   }
 `;
 
-/**
- * @param {{onFormSubmit:(username: string)=>void}} props
- */
-const Form = ({ onFormSubmit }) => {
+type PropsType = {
+  onFormSubmit: (username: string) => void;
+};
+
+const Form = ({ onFormSubmit }: PropsType) => {
   const [username, setUsername] = useState('');
 
-  const handleChange = e => setUsername(e.target.value);
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => setUsername(e.target.value);
 
-  const handleSubmit = async e => {
+  const handleSubmit: React.FormEventHandler = async e => {
     e.preventDefault();
     onFormSubmit(username);
   };
@@ -40,7 +41,7 @@ const Form = ({ onFormSubmit }) => {
   return (
     <Container onSubmit={handleSubmit}>
       <Input type="text" placeholder="Enter an username" onChange={handleChange} />
-      <Button type="submit">Search</Button>
+      <Button>Search</Button>
     </Container>
   );
 };

@@ -1,11 +1,18 @@
+import type { Repo } from 'type';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import sprite from 'sprite.svg';
 import Color from 'styles/color';
-import LanguageColors from 'styles/langColors';
 import Svg from 'components/Svg';
 import breakpoints from 'styles/breakpoints';
+import langColors from 'styles/langColors';
+
+type PropsType = {
+  repo: Repo;
+};
+
+type LanguageType = keyof typeof langColors;
 
 const Item = styled.li`
   padding: 3rem 2rem;
@@ -27,7 +34,7 @@ const Infos = styled.div`
   font-size: 1.4rem;
 `;
 
-const Language = styled.span`
+const Language = styled.span<{ language: LanguageType }>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -38,7 +45,7 @@ const Language = styled.span`
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    background-color: ${props => LanguageColors[props.language]};
+    background-color: ${props => langColors[props.language]};
   }
 `;
 
@@ -53,10 +60,7 @@ const StyledSvg = styled(Svg)`
   height: 1.5rem;
 `;
 
-/**
- * @param {{repo:import('type').Repo}} props
- */
-const RepoItem = ({ repo }) => {
+const RepoItem = ({ repo }: PropsType) => {
   const { name, description, language, stargazers_count, forks_count } = repo;
 
   return (
@@ -66,7 +70,7 @@ const RepoItem = ({ repo }) => {
       </h2>
       {description && <p>{description}</p>}
       <Infos>
-        {language && <Language language={language}>{language}</Language>}
+        {language && <Language language={language as LanguageType}>{language}</Language>}
         <Icon>
           <StyledSvg href={`${sprite}#icon-star-empty`} />
           {stargazers_count}

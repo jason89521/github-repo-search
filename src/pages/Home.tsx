@@ -27,10 +27,10 @@ const StyledSvg = styled(Svg)`
   height: 15rem;
 `;
 
-/**
- * @param {{onFormSubmit:(data: [], username: string)=>void}} props
- */
-const Home = ({ onFormSubmit }) => {
+type PropsType = {
+  onFormSubmit: (username: string) => void;
+};
+const Home = ({ onFormSubmit }: PropsType) => {
   return (
     <Container>
       <Header>

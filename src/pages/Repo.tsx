@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import type { Repo as RepoType, File } from 'type';
 import { fetchFiles, fetchRepo } from 'githubApi';
 import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
@@ -27,26 +28,28 @@ const Heading = styled.h1`
 
 const Repo = () => {
   const params = useParams();
-  const [repo, setRepo] = useState({});
-  const [files, setFiles] = useState([]);
+  const [repo, setRepo] = useState<RepoType>({} as RepoType);
+  const [files, setFiles] = useState<File[]>([]);
 
   useEffect(() => {
     const fetchRepoData = async () => {
+      if (!params.username || !params.repo) return;
       let repoData;
-      let contentsData;
+      let filesData;
       try {
         repoData = (await fetchRepo(params.username, params.repo)).data;
-        contentsData = (await fetchFiles(params.username, params.repo)).data;
+        filesData = (await fetchFiles(params.username, params.repo)).data;
       } catch (error) {
         console.error(error);
+        return;
       }
 
       setRepo(repoData);
-      const sortedContents = contentsData.sort((a, b) => {
+      const sortedFiles = filesData.sort((a, b) => {
         if (a.type === 'dir') return b.type === 'dir' ? 0 : -1;
         return b.type === 'dir' ? 1 : 0;
       });
-      setFiles(sortedContents);
+      setFiles(sortedFiles);
     };
 
     fetchRepoData();

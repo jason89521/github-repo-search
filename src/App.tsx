@@ -1,3 +1,4 @@
+import type { Repo as RepoType } from 'type';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import React, { useCallback, useState } from 'react';
 
@@ -9,9 +10,10 @@ import OuterLayout from 'components/OuterLayout';
 import { fetchRepos } from 'githubApi';
 import Modal from 'components/Modal';
 import Dialog from 'components/Dialog ';
+import axios from 'axios';
 
 const App = () => {
-  const [repos, setRepos] = useState([]);
+  const [repos, setRepos] = useState<RepoType[]>([]);
   const [username, setUsername] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,13 +27,15 @@ const App = () => {
     setIsModalShow(true);
   }, []);
 
-  const onFormSubmit = async newUsername => {
-    let data;
+  const onFormSubmit = async (newUsername: string) => {
+    let data: RepoType[];
     try {
       const response = await fetchRepos(newUsername);
       data = response.data;
     } catch (error) {
-      error.response && showError(error.response);
+      if (axios.isAxiosError(error)) {
+        error.response && showError(error.response);
+      }
       return;
     }
 
@@ -45,12 +49,14 @@ const App = () => {
 
   const fetchNext = useCallback(async () => {
     setIsLoading(true);
-    let data;
+    let data: RepoType[];
     try {
       const response = await fetchRepos(username, pageNumber + 1);
       data = response.data;
     } catch (error) {
-      error.response && showError(error.response);
+      if (axios.isAxiosError(error)) {
+        error.response && showError(error.response);
+      }
       return;
     }
 

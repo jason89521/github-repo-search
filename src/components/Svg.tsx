@@ -6,8 +6,12 @@ const Container = styled.svg`
   height: 2rem;
 `;
 
-// Use sprite.svg
-const Svg = ({ className, href }) => {
+type SvgProps = {
+  className?: string;
+  href: string;
+};
+
+const Svg = ({ className, href }: SvgProps) => {
   return (
     <Container className={className}>
       <use href={href}></use>

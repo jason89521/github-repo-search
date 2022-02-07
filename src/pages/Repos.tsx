@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
+import { Repo } from 'type';
 
 const Heading = styled.h1`
   text-align: center;
@@ -23,7 +24,15 @@ const List = styled.ul`
  * repos: import('type').Repo[]
  * }} props
  */
-const Repos = ({ fetchNext, isLoading, hasMore, repos }) => {
+
+
+type PropsType = {
+  fetchNext: () => void;
+  isLoading: boolean;
+  hasMore: boolean;
+  repos: Repo[]
+}
+const Repos = ({ fetchNext, isLoading, hasMore, repos }: PropsType) => {
   const { username } = useParams();
 
   const renderedRepos = repos.map(repo => {

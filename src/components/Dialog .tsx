@@ -27,13 +27,11 @@ const StyledButton = styled(Button)`
   }
 `;
 
-/**
- * @param {{
- * message: string,
- * onClick: React.MouseEventHandler
- * }} props
- */
-const Dialog = ({ message, onClick }) => {
+type PropsType = {
+  message: string;
+  onClick: React.MouseEventHandler;
+};
+const Dialog = ({ message, onClick }: PropsType) => {
   return (
     <Container>
       {message}

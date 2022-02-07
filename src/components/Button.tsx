@@ -20,14 +20,13 @@ const Container = styled.button`
   }
 `;
 
-/**
- * @param {{
- * className: string,
- * children: React.ReactNode[]
- * onClick: React.MouseEventHandler
- * }} props
- */
-const Button = ({ className, children, onClick }) => {
+export type PropsType = {
+  className?: string;
+  children: React.ReactNode[] | React.ReactNode;
+  onClick?: React.MouseEventHandler;
+};
+
+const Button = ({ className, children, onClick }: PropsType) => {
   return (
     <Container className={className} onClick={onClick}>
       {children}

@@ -13,14 +13,12 @@ const InfiniteScroll = ({ hasMore, children, next, isLoading }) => {
   const [isBottom, lastRef] = useIntersection();
 
   useEffect(() => {
-    if (!isBottom || isLoading || !hasMore) return;
-
-    // Should wait for all dependencies to be debounced.
-    const timeoutId = setTimeout(() => {
+    if (isBottom && !isLoading && hasMore) {
       next();
-    }, 500);
-    return () => clearTimeout(timeoutId);
-  }, [isBottom, isLoading, hasMore, next]);
+    }
+    // Execute this effect only when the `isBottom` changes to true.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBottom]);
 
   return (
     <div>

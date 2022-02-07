@@ -1,12 +1,14 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
-import Layout from 'components/InnerLayout';
+import InnerLayout from 'components/InnerLayout';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
 import OuterLayout from 'components/OuterLayout';
 import { fetchRepos } from 'githubApi';
+import Modal from 'components/Modal';
+import Dialog from 'components/Dialog ';
 
 const App = () => {
   const [repos, setRepos] = useState([]);
@@ -18,17 +20,18 @@ const App = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
+  const showError = useCallback(response => {
+    setErrorMsg(response.data.message);
+    setIsModalShow(true);
+  }, []);
+
   const onFormSubmit = async newUsername => {
     let data;
     try {
       const response = await fetchRepos(newUsername);
       data = response.data;
     } catch (error) {
-      const response = error.response;
-      if (response) {
-        setErrorMsg(response.data.message);
-        setIsModalShow(true);
-      }
+      error.response && showError(error.response);
       return;
     }
 
@@ -40,38 +43,33 @@ const App = () => {
     navigate(`/users/${newUsername}/repos`);
   };
 
-  const fetchNext = async () => {
+  const fetchNext = useCallback(async () => {
     setIsLoading(true);
+    let data;
     try {
       const response = await fetchRepos(username, pageNumber + 1);
-      setRepos([...repos, ...response.data]);
-      setPageNumber(pageNumber + 1);
-      setHasMore(response.data.length > 0);
+      data = response.data;
     } catch (error) {
-      console.error(error);
+      error.response && showError(error.response);
+      return;
     }
-    setIsLoading(false);
-  };
 
-  const hideModal = () => {
-    setIsModalShow(false);
-  };
+    setRepos(prev => [...prev, ...data]);
+    setPageNumber(pageNumber + 1);
+    setHasMore(data.length > 0);
+    setIsLoading(false);
+  }, [username, pageNumber, showError]);
 
   return (
     <OuterLayout>
+      {isModalShow ? (
+        <Modal>
+          <Dialog message={errorMsg} onClick={() => setIsModalShow(false)} />
+        </Modal>
+      ) : null}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              onFormSubmit={onFormSubmit}
-              errorMsg={errorMsg}
-              isModalShow={isModalShow}
-              hideModal={hideModal}
-            />
-          }
-        />
-        <Route path="users/:username/repos" element={<Layout />}>
+        <Route path="/" element={<Home onFormSubmit={onFormSubmit} />} />
+        <Route path="users/:username/repos" element={<InnerLayout />}>
           <Route
             index
             element={

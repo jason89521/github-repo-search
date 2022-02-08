@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
+import { RepoType } from 'type';
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
-import { Repo } from 'type';
+
+type PropsType = {
+  fetchNext: () => Promise<any>;
+  hasMore: boolean;
+  repos: RepoType[];
+};
 
 const Heading = styled.h1`
   text-align: center;
@@ -16,23 +22,7 @@ const List = styled.ul`
   height: 100%;
 `;
 
-/**
- * @param {{
- * fetchNext: () => void,
- * isLoading: boolean,
- * hasMore: boolean,
- * repos: import('type').Repo[]
- * }} props
- */
-
-
-type PropsType = {
-  fetchNext: () => void;
-  isLoading: boolean;
-  hasMore: boolean;
-  repos: Repo[]
-}
-const Repos = ({ fetchNext, isLoading, hasMore, repos }: PropsType) => {
+const Repos = ({ fetchNext,  hasMore, repos }: PropsType) => {
   const { username } = useParams();
 
   const renderedRepos = repos.map(repo => {
@@ -43,7 +33,7 @@ const Repos = ({ fetchNext, isLoading, hasMore, repos }: PropsType) => {
     <>
       <Heading>{username}</Heading>
 
-      <InfiniteScroll next={fetchNext} isLoading={isLoading} hasMore={hasMore}>
+      <InfiniteScroll next={fetchNext}  hasMore={hasMore}>
         <List>{renderedRepos}</List>
       </InfiniteScroll>
     </>

@@ -2,18 +2,11 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import type { Repo as RepoType, File } from 'type';
+import { RepoType, FileType } from 'type';
 import { fetchFiles, fetchRepo } from 'githubApi';
 import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import FilesList from 'components/FilesList';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 1.5rem;
-  gap: 2rem;
-`;
 
 const StarsCount = styled.span`
   display: flex;
@@ -29,13 +22,13 @@ const Heading = styled.h1`
 const Repo = () => {
   const params = useParams();
   const [repo, setRepo] = useState<RepoType>({} as RepoType);
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FileType[]>([]);
 
   useEffect(() => {
     const fetchRepoData = async () => {
       if (!params.username || !params.repo) return;
-      let repoData;
-      let filesData;
+      let repoData: RepoType;
+      let filesData: FileType[];
       try {
         repoData = (await fetchRepo(params.username, params.repo)).data;
         filesData = (await fetchFiles(params.username, params.repo)).data;
@@ -58,7 +51,7 @@ const Repo = () => {
   const { full_name, description, stargazers_count, html_url } = repo;
 
   return (
-    <Container>
+    <>
       <StarsCount>
         <Svg href={`${sprite}#icon-star-empty`} />
         {stargazers_count}
@@ -70,7 +63,7 @@ const Repo = () => {
       </Heading>
       <p>{description}</p>
       <FilesList files={files} />
-    </Container>
+    </>
   );
 };
 

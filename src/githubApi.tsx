@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Repo, File } from 'type';
+import { RepoType, FileType } from 'type';
 
 const githubApi = axios.create({
   baseURL: ' https://api.github.com/',
@@ -9,17 +9,17 @@ const githubApi = axios.create({
 });
 
 export const fetchRepos = (username: string, pageNumber = 1) => {
-  return githubApi.get<any, AxiosResponse<Repo[]>>(`/users/${username}/repos`, {
+  return githubApi.get<any, AxiosResponse<RepoType[]>>(`/users/${username}/repos`, {
     params: { page: pageNumber },
   });
 };
 
 export const fetchRepo = (username: string, repo: string) => {
-  return githubApi.get<any, AxiosResponse<Repo>>(`repos/${username}/${repo}`);
+  return githubApi.get<any, AxiosResponse<RepoType>>(`repos/${username}/${repo}`);
 };
 
 export const fetchFiles = (username: string, repo: string) => {
-  return githubApi.get<any, AxiosResponse<File[]>>(`repos/${username}/${repo}/contents`);
+  return githubApi.get<any, AxiosResponse<FileType[]>>(`repos/${username}/${repo}/contents`);
 };
 
 export default githubApi;

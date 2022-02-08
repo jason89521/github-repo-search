@@ -4,6 +4,10 @@ import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import Form from 'components/Form';
 
+type PropsType = {
+  onFormSubmit: (username: string) => void;
+};
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,9 +31,6 @@ const StyledSvg = styled(Svg)`
   height: 15rem;
 `;
 
-type PropsType = {
-  onFormSubmit: (username: string) => void;
-};
 const Home = ({ onFormSubmit }: PropsType) => {
   return (
     <Container>

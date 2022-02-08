@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+type PropsType = {
+  className?: string;
+  children: React.ReactNode[] | React.ReactNode;
+  onClick?: React.MouseEventHandler;
+};
+
 const Container = styled.button`
   cursor: pointer;
   background-color: #1e90ff;
@@ -19,12 +25,6 @@ const Container = styled.button`
     background-color: #70a1ff;
   }
 `;
-
-export type PropsType = {
-  className?: string;
-  children: React.ReactNode[] | React.ReactNode;
-  onClick?: React.MouseEventHandler;
-};
 
 const Button = ({ className, children, onClick }: PropsType) => {
   return (

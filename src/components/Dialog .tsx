@@ -1,8 +1,13 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import Color from 'styles/color';
 import Button from 'components/Button';
-import React from 'react';
+
+type PropsType = {
+  message: string;
+  onClick: React.MouseEventHandler;
+};
 
 const Container = styled.div`
   padding: 3rem 0;
@@ -27,10 +32,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-type PropsType = {
-  message: string;
-  onClick: React.MouseEventHandler;
-};
 const Dialog = ({ message, onClick }: PropsType) => {
   return (
     <Container>

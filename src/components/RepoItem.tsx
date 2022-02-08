@@ -1,7 +1,7 @@
-import type { Repo } from 'type';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import type { RepoType } from 'type';
 import sprite from 'sprite.svg';
 import Color from 'styles/color';
 import Svg from 'components/Svg';
@@ -9,7 +9,7 @@ import breakpoints from 'styles/breakpoints';
 import langColors from 'styles/langColors';
 
 type PropsType = {
-  repo: Repo;
+  repo: RepoType;
 };
 
 type LanguageType = keyof typeof langColors;

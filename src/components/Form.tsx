@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import Button from 'components/Button';
 import { useState } from 'react';
 
+type PropsType = {
+  onFormSubmit: (username: string) => void;
+};
+
 const Container = styled.form`
   display: flex;
   flex-direction: column;
@@ -23,10 +27,6 @@ const Input = styled.input`
     width: 100%;
   }
 `;
-
-type PropsType = {
-  onFormSubmit: (username: string) => void;
-};
 
 const Form = ({ onFormSubmit }: PropsType) => {
   const [username, setUsername] = useState('');

@@ -4,6 +4,10 @@ import React from 'react';
 import Color from 'styles/color';
 import breakpoints from 'styles/breakpoints';
 
+type PropsType = {
+  children: React.ReactNode[] | React.ReactNode;
+};
+
 const Container = styled.div`
   padding: 5rem 0;
   min-height: 100vh;
@@ -30,6 +34,7 @@ const Panel = styled.div`
 
   @media (max-width: ${breakpoints.large}) {
     width: 100%;
+    border-radius: 0;
   }
 
   @media (max-width: ${breakpoints.small}) {
@@ -37,9 +42,6 @@ const Panel = styled.div`
   }
 `;
 
-type PropsType = {
-  children: React.ReactNode[] | React.ReactNode;
-};
 const OuterLayout = ({ children }: PropsType) => {
   return (
     <Container>

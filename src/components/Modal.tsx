@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import React, { useEffect, useRef } from 'react';
 import Color from 'styles/color';
 
+type PropsType = {
+  children: React.ReactNode[] | React.ReactNode;
+};
+
 const Container = styled.div`
   position: fixed;
   top: 0;
@@ -17,10 +21,6 @@ const Container = styled.div`
 `;
 
 const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
-
-type PropsType = {
-  children: React.ReactNode[] | React.ReactNode;
-};
 
 const Modal = ({ children }: PropsType) => {
   const elRef = useRef(document.createElement('div'));

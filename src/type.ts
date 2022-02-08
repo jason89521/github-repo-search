@@ -1,4 +1,4 @@
-export type Repo = {
+export type RepoType = {
   id: number;
   stargazers_count: number;
   forks_count: number;
@@ -9,7 +9,7 @@ export type Repo = {
   language: string;
 };
 
-export type File = {
+export type FileType = {
   name: string;
   type: string;
   html_url: string;

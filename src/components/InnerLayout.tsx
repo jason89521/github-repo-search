@@ -7,6 +7,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  font-size: 1.5rem;
 `;
 
 const StyledButton = styled(Button)`

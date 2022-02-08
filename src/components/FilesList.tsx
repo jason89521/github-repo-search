@@ -1,9 +1,13 @@
-import type { File } from 'type';
 import styled from 'styled-components';
 
+import type { FileType } from 'type';
 import Sprite from 'sprite.svg';
 import Color from 'styles/color';
 import Svg from 'components/Svg';
+
+type PropsType = {
+  files: FileType[];
+};
 
 const List = styled.ul`
   border: 1px solid ${Color.gray};
@@ -28,10 +32,6 @@ const FileLink = styled.a`
     color: ${Color.link};
   }
 `;
-
-type PropsType = {
-  files: File[];
-};
 
 const FilesList = ({ files }: PropsType) => {
   return (

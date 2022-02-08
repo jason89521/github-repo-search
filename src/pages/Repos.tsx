@@ -16,16 +16,14 @@ const Heading = styled.h1`
 const List = styled.ul`
   display: flex;
   flex-direction: column;
-  height: 100%;
 `;
 
 const Repos = () => {
   const { username = '' } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
 
-  const { data: reposList } = useAppSelector(state => state.reposList);
+  const { data: reposList, page } = useAppSelector(state => state.reposList);
   const appDispatch = useAppDispatch();
 
   const fetchNext = async () => {
@@ -34,7 +32,6 @@ const Repos = () => {
     appDispatch(appendNext(response.data));
     setIsLoading(false);
     setHasMore(response.data.length > 0);
-    setPage(page + 1);
   };
 
   const renderedRepos = reposList.map(repo => {

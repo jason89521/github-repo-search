@@ -1,6 +1,6 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from 'store';
@@ -39,21 +39,24 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const appDispatch = useAppDispatch();
-  const handleSubmit = async (username: string) => {
-    let response;
-    try {
-      response = await fetchRepos(username);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setShowModal(true);
-        setErrorMsg(error.response?.data.message);
+  const handleSubmit = useCallback(
+    async (username: string) => {
+      let response;
+      try {
+        response = await fetchRepos(username);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          setShowModal(true);
+          setErrorMsg(error.response?.data.message);
+        }
+        return;
       }
-      return;
-    }
 
-    appDispatch(reset(response.data));
-    navigate(`users/${username}/repos`);
-  };
+      appDispatch(reset(response.data));
+      navigate(`users/${username}/repos`);
+    },
+    [appDispatch, navigate]
+  );
 
   return (
     <>
@@ -64,7 +67,7 @@ const Home = () => {
       )}
       <Container>
         <Header>
-          <StyledSvg href='icon-github'></StyledSvg>
+          <StyledSvg href="icon-github"></StyledSvg>
           <h1>Github Repositories</h1>
         </Header>
 

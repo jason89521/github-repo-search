@@ -4,19 +4,13 @@ import { useEffect, useState } from 'react';
 
 import type { RepoType, FileType } from 'type';
 import { fetchFiles, fetchRepo } from 'githubApi';
-import Svg from 'components/Svg';
 import FilesList from 'components/FilesList';
+import Icon from 'components/Icon';
 
 const IconsBox = styled.div`
   display: flex;
   align-items: center;
   gap: 1.5rem;
-`;
-
-const Icon = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 `;
 
 const Heading = styled.h1`
@@ -58,26 +52,17 @@ const Repo = () => {
 
   return (
     <>
-      <IconsBox>
-        <Icon>
-          <Svg href="icon-star" />
-          {stargazers_count}
-        </Icon>
-        <Icon>
-          <Svg href="icon-fork" />
-          {forks_count}
-        </Icon>
-        <Icon>
-          <Svg href="icon-issue" />
-          {open_issues_count}
-        </Icon>
-      </IconsBox>
       <Heading>
         <a href={html_url} target="_blank" rel="noreferrer">
           {full_name}
         </a>
       </Heading>
       <p>{description}</p>
+      <IconsBox>
+        <Icon href="icon-star" message={stargazers_count} />
+        <Icon href="icon-fork" message={forks_count} />
+        <Icon href="icon-issue" message={open_issues_count} />
+      </IconsBox>
       <FilesList files={files} />
     </>
   );

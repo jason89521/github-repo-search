@@ -40,7 +40,7 @@ const Form = ({ onFormSubmit }: PropsType) => {
 
   return (
     <Container onSubmit={handleSubmit}>
-      <Input type="text" placeholder="Enter an username" onChange={handleChange} />
+      <Input type="text" placeholder="Enter an username" onChange={handleChange} value={username} />
       <Button>Search</Button>
     </Container>
   );

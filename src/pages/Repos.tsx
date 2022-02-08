@@ -1,15 +1,12 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { RepoType } from 'type';
+import { useAppDispatch, useAppSelector } from 'store';
+import { appendNext } from 'slices/repoListSlice';
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
-
-type PropsType = {
-  fetchNext: () => Promise<any>;
-  hasMore: boolean;
-  repos: RepoType[];
-};
+import { fetchRepos } from 'githubApi';
 
 const Heading = styled.h1`
   text-align: center;
@@ -22,10 +19,22 @@ const List = styled.ul`
   height: 100%;
 `;
 
-const Repos = ({ fetchNext,  hasMore, repos }: PropsType) => {
+const Repos = () => {
   const { username } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const renderedRepos = repos.map(repo => {
+  const { data: reposList, hasMore, page } = useAppSelector(state => state.reposList);
+  const appDispatch = useAppDispatch();
+
+  const fetchNext = async () => {
+    if (!username) return;
+    setIsLoading(true);
+    const response = await fetchRepos(username, page + 1);
+    appDispatch(appendNext(response.data));
+    setIsLoading(false);
+  };
+
+  const renderedRepos = reposList.map(repo => {
     return <RepoItem key={repo.id} repo={repo} />;
   });
 
@@ -33,7 +42,7 @@ const Repos = ({ fetchNext,  hasMore, repos }: PropsType) => {
     <>
       <Heading>{username}</Heading>
 
-      <InfiniteScroll next={fetchNext}  hasMore={hasMore}>
+      <InfiniteScroll next={fetchNext} hasMore={hasMore} isLoading={isLoading}>
         <List>{renderedRepos}</List>
       </InfiniteScroll>
     </>

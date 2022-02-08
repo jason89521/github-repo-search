@@ -1,12 +1,12 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
+import { useAppDispatch } from 'store';
+import { reset } from 'slices/repoListSlice';
+import { fetchRepos } from 'githubApi';
 import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import Form from 'components/Form';
-
-type PropsType = {
-  onFormSubmit: (username: string) => void;
-};
 
 const Container = styled.div`
   display: flex;
@@ -31,7 +31,15 @@ const StyledSvg = styled(Svg)`
   height: 15rem;
 `;
 
-const Home = ({ onFormSubmit }: PropsType) => {
+const Home = () => {
+  const navigate = useNavigate();
+  const appDispatch = useAppDispatch();
+  const handleSubmit = async (username: string) => {
+    const response = await fetchRepos(username);
+    appDispatch(reset(response.data));
+    navigate(`users/${username}/repos`);
+  };
+
   return (
     <Container>
       <Header>
@@ -39,7 +47,7 @@ const Home = ({ onFormSubmit }: PropsType) => {
         <h1>Github Repositories</h1>
       </Header>
 
-      <Form onFormSubmit={onFormSubmit} />
+      <Form onFormSubmit={handleSubmit} />
     </Container>
   );
 };

@@ -1,25 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useIntersection } from '@yuxuan-zheng/hooks';
 
 type PropsType = {
   hasMore: boolean;
+  isLoading: boolean;
   children: React.ReactNode[] | React.ReactNode;
-  next: () => Promise<any>;
+  next: () => any;
 };
 
-const InfiniteScroll = ({ hasMore, children, next }: PropsType) => {
+const InfiniteScroll = ({ hasMore, isLoading, children, next }: PropsType) => {
   const [isBottom, lastRef] = useIntersection();
-  const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
-    const callNext = async () => {
-      setisLoading(true);
-      await next();
-      setisLoading(false);
-    };
-
     if (isBottom && !isLoading && hasMore) {
-      callNext();
+      next();
     }
     // Execute this effect only when the `isBottom` changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps

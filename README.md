@@ -12,19 +12,19 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Files Structure
 
-The following section will describe what the files or the folders do in the `src` folder
+The following section will describe what the important files or folders do in the `src` folder
 
-### `index.js` 
+### `index.tsx` 
 
 Global style and `BrowserRouter` are added in this file, and the `App` component is rendered in this file also.
 
-### `App.js`
+### `App.tsx`
 
 This file contains the App component. The main tasks of the App component are:
 - Fetch the list of repositories from github.
 - Store the list of repositories such that `Repos` page can render the repositories.
 
-### `githubApi.js`
+### `githubApi.tsx`
 
 This file contains all apis to fetch data from github, including:
 - Fetch the list of repositories.
@@ -49,6 +49,7 @@ This folder contains all components each page may need.
 
 - [React](https://github.com/facebook/react)
 - [React Router](https://github.com/remix-run/react-router)
+- [Redux Toolkit](https://github.com/reduxjs/redux-toolkit)
 - [styled-components](https://github.com/styled-components/styled-components)
 - [axios](https://github.com/axios/axios)
 

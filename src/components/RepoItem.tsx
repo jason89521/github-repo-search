@@ -61,7 +61,7 @@ const StyledSvg = styled(Svg)`
 `;
 
 const RepoItem = ({ repo }: PropsType) => {
-  const { name, description, language, stargazers_count, forks_count } = repo;
+  const { name, description, language, stargazers_count, forks_count, open_issues_count } = repo;
 
   return (
     <Item>
@@ -78,6 +78,10 @@ const RepoItem = ({ repo }: PropsType) => {
         <Icon>
           <StyledSvg href={`${sprite}#icon-folk`} />
           {forks_count}
+        </Icon>
+        <Icon>
+          <StyledSvg href={`${sprite}#icon-issue`} />
+          {open_issues_count}
         </Icon>
       </Infos>
     </Item>

@@ -1,4 +1,6 @@
+import axios from 'axios';
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from 'store';
@@ -7,6 +9,8 @@ import { fetchRepos } from 'githubApi';
 import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import Form from 'components/Form';
+import Modal from 'components/Modal';
+import Dialog from 'components/Dialog ';
 
 const Container = styled.div`
   display: flex;
@@ -33,22 +37,41 @@ const StyledSvg = styled(Svg)`
 
 const Home = () => {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const appDispatch = useAppDispatch();
   const handleSubmit = async (username: string) => {
-    const response = await fetchRepos(username);
+    let response;
+    try {
+      response = await fetchRepos(username);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setShowModal(true);
+        setErrorMsg(error.response?.data.message);
+      }
+      return;
+    }
+
     appDispatch(reset(response.data));
     navigate(`users/${username}/repos`);
   };
 
   return (
-    <Container>
-      <Header>
-        <StyledSvg href={`${sprite}#icon-github`}></StyledSvg>
-        <h1>Github Repositories</h1>
-      </Header>
+    <>
+      {showModal && (
+        <Modal>
+          <Dialog onClick={() => setShowModal(false)} message={errorMsg} />
+        </Modal>
+      )}
+      <Container>
+        <Header>
+          <StyledSvg href={`${sprite}#icon-github`}></StyledSvg>
+          <h1>Github Repositories</h1>
+        </Header>
 
-      <Form onFormSubmit={handleSubmit} />
-    </Container>
+        <Form onFormSubmit={handleSubmit} />
+      </Container>
+    </>
   );
 };
 

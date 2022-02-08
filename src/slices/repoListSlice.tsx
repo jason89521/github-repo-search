@@ -4,11 +4,9 @@ import type { RepoType } from 'type';
 
 type ReposListState = {
   data: RepoType[];
-  hasMore: boolean;
-  page: number;
 };
 
-const initialState: ReposListState = { data: [], hasMore: false, page: 1 };
+const initialState: ReposListState = { data: [] };
 
 const reposListSlice = createSlice({
   name: 'reposList',
@@ -16,13 +14,9 @@ const reposListSlice = createSlice({
   reducers: {
     reset: (state, action: PayloadAction<RepoType[]>) => {
       state.data = action.payload;
-      state.hasMore = action.payload.length > 0;
-      state.page = 1;
     },
     appendNext: (state, action: PayloadAction<RepoType[]>) => {
       state.data = [...state.data, ...action.payload];
-      state.hasMore = action.payload.length > 0;
-      state.page += 1;
     },
   },
 });

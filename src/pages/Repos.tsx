@@ -20,18 +20,21 @@ const List = styled.ul`
 `;
 
 const Repos = () => {
-  const { username } = useParams();
+  const { username = '' } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
 
-  const { data: reposList, hasMore, page } = useAppSelector(state => state.reposList);
+  const { data: reposList } = useAppSelector(state => state.reposList);
   const appDispatch = useAppDispatch();
 
   const fetchNext = async () => {
-    if (!username) return;
     setIsLoading(true);
     const response = await fetchRepos(username, page + 1);
     appDispatch(appendNext(response.data));
     setIsLoading(false);
+    setHasMore(response.data.length > 0);
+    setPage(page + 1);
   };
 
   const renderedRepos = reposList.map(repo => {

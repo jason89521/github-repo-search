@@ -2,11 +2,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import type { RepoType } from 'type';
-import sprite from 'sprite.svg';
 import Color from 'styles/color';
-import Svg from 'components/Svg';
 import breakpoints from 'styles/breakpoints';
 import langColors from 'styles/langColors';
+import Icon from 'components/Icon';
 
 type PropsType = {
   repo: RepoType;
@@ -49,17 +48,6 @@ const Language = styled.span<{ language: LanguageType }>`
   }
 `;
 
-const Icon = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const StyledSvg = styled(Svg)`
-  width: 1.5rem;
-  height: 1.5rem;
-`;
-
 const RepoItem = ({ repo }: PropsType) => {
   const { name, description, language, stargazers_count, forks_count, open_issues_count } = repo;
 
@@ -71,18 +59,9 @@ const RepoItem = ({ repo }: PropsType) => {
       {description && <p>{description}</p>}
       <Infos>
         {language && <Language language={language as LanguageType}>{language}</Language>}
-        <Icon>
-          <StyledSvg href={`${sprite}#icon-star-empty`} />
-          {stargazers_count}
-        </Icon>
-        <Icon>
-          <StyledSvg href={`${sprite}#icon-folk`} />
-          {forks_count}
-        </Icon>
-        <Icon>
-          <StyledSvg href={`${sprite}#icon-issue`} />
-          {open_issues_count}
-        </Icon>
+        <Icon href="icon-star" message={stargazers_count} />
+        <Icon href="icon-fork" message={forks_count} />
+        <Icon href="icon-issue" message={open_issues_count} />
       </Infos>
     </Item>
   );

@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'store';
 import { reset } from 'slices/repoListSlice';
 import { fetchRepos } from 'githubApi';
-import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import Form from 'components/Form';
 import Modal from 'components/Modal';
@@ -65,7 +64,7 @@ const Home = () => {
       )}
       <Container>
         <Header>
-          <StyledSvg href={`${sprite}#icon-github`}></StyledSvg>
+          <StyledSvg href='icon-github'></StyledSvg>
           <h1>Github Repositories</h1>
         </Header>
 

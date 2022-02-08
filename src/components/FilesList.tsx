@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import type { FileType } from 'type';
-import Sprite from 'sprite.svg';
 import Color from 'styles/color';
 import Svg from 'components/Svg';
 
@@ -38,10 +37,10 @@ const FilesList = ({ files }: PropsType) => {
     <List>
       {files &&
         files.map(file => {
-          const iconType = file.type === 'dir' ? '#icon-folder' : '#icon-file';
+          const iconType = file.type === 'dir' ? 'icon-folder' : 'icon-file';
           return (
             <Item key={file.name}>
-              <Svg href={`${Sprite}${iconType}`} />
+              <Svg href={`${iconType}`} />
               <FileLink href={file.html_url} target="_blank" rel="noreferrer">
                 {file.name}
               </FileLink>

@@ -2,13 +2,18 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { RepoType, FileType } from 'type';
+import type { RepoType, FileType } from 'type';
 import { fetchFiles, fetchRepo } from 'githubApi';
-import sprite from 'sprite.svg';
 import Svg from 'components/Svg';
 import FilesList from 'components/FilesList';
 
-const StarsCount = styled.span`
+const IconsBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+`;
+
+const Icon = styled.span`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -48,14 +53,25 @@ const Repo = () => {
     fetchRepoData();
   }, [params]);
 
-  const { full_name, description, stargazers_count, html_url } = repo;
+  const { full_name, description, html_url, stargazers_count, forks_count, open_issues_count } =
+    repo;
 
   return (
     <>
-      <StarsCount>
-        <Svg href={`${sprite}#icon-star-empty`} />
-        {stargazers_count}
-      </StarsCount>
+      <IconsBox>
+        <Icon>
+          <Svg href="icon-star" />
+          {stargazers_count}
+        </Icon>
+        <Icon>
+          <Svg href="icon-fork" />
+          {forks_count}
+        </Icon>
+        <Icon>
+          <Svg href="icon-issue" />
+          {open_issues_count}
+        </Icon>
+      </IconsBox>
       <Heading>
         <a href={html_url} target="_blank" rel="noreferrer">
           {full_name}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import Color from 'styles/color';
@@ -10,8 +10,8 @@ type PropsType = {
 };
 
 const Container = styled.div`
-  padding: 3rem 0;
-  width: 50%;
+  padding: 2rem;
+  width: 70%;
   min-height: 20rem;
   border-radius: 10px;
   background-color: ${Color.gray};
@@ -20,7 +20,8 @@ const Container = styled.div`
   font-weight: 700;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 2rem;
+  justify-content: space-around;
   align-items: center;
 `;
 
@@ -30,13 +31,26 @@ const StyledButton = styled(Button)`
   &:hover {
     background-color: #ff6b81;
   }
+
+  &:focus {
+    outline: 3px solid #fff;
+    transform: scale(1.1);
+  }
 `;
 
 const Dialog = ({ message, onClick }: PropsType) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setTimeout(() => buttonRef.current?.focus());
+  }, []);
+
   return (
     <Container>
       {message}
-      <StyledButton onClick={onClick}>OK</StyledButton>
+      <StyledButton ref={buttonRef} onClick={onClick}>
+        OK
+      </StyledButton>
     </Container>
   );
 };

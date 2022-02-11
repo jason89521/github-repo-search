@@ -20,18 +20,19 @@ const Container = styled.button`
   font-size: 2rem;
   letter-spacing: 1px;
   transition: all 0.2s;
+  backface-visibility: hidden;
 
   &:hover {
     background-color: #70a1ff;
   }
 `;
 
-const Button = ({ className, children, onClick }: PropsType) => {
+const Button = React.forwardRef<HTMLButtonElement, PropsType>(({ className, children, onClick }, ref) => {
   return (
-    <Container className={className} onClick={onClick}>
+    <Container ref={ref} className={className} onClick={onClick}>
       {children}
     </Container>
   );
-};
+});
 
 export default Button;

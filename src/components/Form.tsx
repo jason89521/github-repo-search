@@ -4,6 +4,7 @@ import Button from 'components/Button';
 import { useState } from 'react';
 
 type PropsType = {
+  isSubmitting: boolean;
   onFormSubmit: (username: string) => void;
 };
 
@@ -28,13 +29,15 @@ const Input = styled.input`
   }
 `;
 
-const Form = ({ onFormSubmit }: PropsType) => {
+const Form = ({ isSubmitting, onFormSubmit }: PropsType) => {
   const [username, setUsername] = useState('');
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => setUsername(e.target.value);
 
   const handleSubmit: React.FormEventHandler = async e => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     onFormSubmit(username);
   };
 

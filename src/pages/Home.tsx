@@ -38,9 +38,11 @@ const Home = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const appDispatch = useAppDispatch();
   const handleSubmit = useCallback(
     async (username: string) => {
+      setIsSubmitting(true);
       let response;
       try {
         response = await fetchRepos(username);
@@ -50,6 +52,8 @@ const Home = () => {
           setErrorMsg(error.response?.data.message);
         }
         return;
+      } finally {
+        setIsSubmitting(false);
       }
 
       appDispatch(reset(response.data));
@@ -71,7 +75,7 @@ const Home = () => {
           <h1>Github Repositories</h1>
         </Header>
 
-        <Form onFormSubmit={handleSubmit} />
+        <Form isSubmitting={isSubmitting} onFormSubmit={handleSubmit} />
       </Container>
     </>
   );

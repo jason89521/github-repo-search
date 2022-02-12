@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Container, Panel } from './style';
 
-type PropsType = {
+type OuterLayoutProps = {
   children: React.ReactNode[] | React.ReactNode;
 };
 
-const OuterLayout = ({ children }: PropsType) => {
+const OuterLayout = ({ children }: OuterLayoutProps) => {
   return (
     <Container>
       <Panel>{children}</Panel>

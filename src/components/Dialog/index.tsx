@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 
 import { Container, StyledButton } from './style';
 
-type PropsType = {
+type DialogProps = {
   message: string;
   onClick: React.MouseEventHandler;
 };
 
-const Dialog = ({ message, onClick }: PropsType) => {
+const Dialog = ({ message, onClick }: DialogProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {

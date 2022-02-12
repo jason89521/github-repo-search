@@ -4,11 +4,11 @@ import { Item, Infos, Language, LanguageType } from './style';
 import { RepoType } from 'type';
 import Icon from 'components/Icon';
 
-type PropsType = {
+type RepoItemProps = {
   repo: RepoType;
 };
 
-const RepoItem = ({ repo }: PropsType) => {
+const RepoItem = ({ repo }: RepoItemProps) => {
   const { name, description, language, stargazers_count, forks_count, open_issues_count } = repo;
 
   return (

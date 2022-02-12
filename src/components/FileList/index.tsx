@@ -3,11 +3,11 @@ import { List, Item, FileLink } from './style';
 import Svg from 'components/Svg';
 import { FileType } from 'type';
 
-type PropsType = {
+type FileListProps = {
   files: FileType[];
 };
 
-const FilesList = ({ files }: PropsType) => {
+const FilesList = ({ files }: FileListProps) => {
   return (
     <List>
       {files &&

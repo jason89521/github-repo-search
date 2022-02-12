@@ -22,4 +22,8 @@ export const fetchFiles = (username: string, repo: string) => {
   return githubApi.get<any, AxiosResponse<FileType[]>>(`repos/${username}/${repo}/contents`);
 };
 
+export const searchUser = (username: string) => {
+  return githubApi.get('/search/users', { params: { q: username, per_page: 3 } });
+};
+
 export default githubApi;

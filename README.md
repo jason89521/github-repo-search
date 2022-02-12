@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Files Structure
 
-The following section will describe what the files or folders do in the `src` folder
+The following section will describe what the files or folders do in the `src` folder. All components are placed in one folder which contains `index.tsx` and `style.tsx`. The `index.tsx` contains the functionality of the component. The `style.tsx` contains the styles of the components.
 
 ### `index.tsx` 
 
@@ -71,5 +71,7 @@ This folder contains the slices of Redux.
 - [Redux Toolkit](https://github.com/reduxjs/redux-toolkit)
 - [styled-components](https://github.com/styled-components/styled-components)
 - [axios](https://github.com/axios/axios)
+- [framer motion](https://github.com/framer/motion)
+- [yuxuan-zheng/hooks](https://github.com/jason89521/hooks)
 
 ## [Live Demo](https://dcard-homework.vercel.app/)

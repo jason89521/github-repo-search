@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import Button from 'components/Button';
-import { useState } from 'react';
+import SearchField from 'components/SearchField';
 
 type PropsType = {
   isSubmitting: boolean;
@@ -15,26 +16,10 @@ const Container = styled.form`
   gap: 3rem;
 `;
 
-const Input = styled.input`
-  width: 70%;
-  padding: 1rem 2rem;
-  border-radius: 100rem;
-  border: none;
-  outline: none;
-  font-size: 2rem;
-  transition: all 0.2s;
-
-  &:focus {
-    width: 100%;
-  }
-`;
-
 const Form = ({ isSubmitting, onFormSubmit }: PropsType) => {
   const [username, setUsername] = useState('');
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => setUsername(e.target.value);
-
-  const handleSubmit: React.FormEventHandler = async e => {
+  const handleSubmit: React.FormEventHandler = e => {
     e.preventDefault();
     if (isSubmitting) return;
 
@@ -43,7 +28,7 @@ const Form = ({ isSubmitting, onFormSubmit }: PropsType) => {
 
   return (
     <Container onSubmit={handleSubmit}>
-      <Input type="text" placeholder="Enter an username" onChange={handleChange} value={username} />
+      <SearchField />
       <Button>Search</Button>
     </Container>
   );

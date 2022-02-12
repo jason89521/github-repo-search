@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Files Structure
 
-The following section will describe what the files or folders do in the `src` folder. All components are placed in one folder which contains `index.tsx` and `style.tsx`. The `index.tsx` contains the functionality of the component. The `style.tsx` contains the styles of the components.
+The following section will describe what the files or folders do in the `src` folder. Every component in the `components` folder or `pages` folder is placed in one folder which contains `[name].tsx` , `[name].style.tsx` (if the component has styles) and `index.tsx`. The `[name].tsx` contains the functionality of the component. The `style.tsx` contains the styles of the components. The `index.tsx` reexports the component from `[name].tsx`.
 
 ### `index.tsx` 
 
@@ -47,7 +47,8 @@ There are three pages in this app, `Home`, `Repos` and `Repo`. This folder conta
 
 #### `Home`
 
-In this page, user can type an username to search the repositories. If the username exists, this app will redirect user to `/users/{username}/repos`; otherwise, this app will show a dialog to tell user that the username is not found.
+In this page, user can type an username to search the repositories. If the username exists, this app will redirect user to `/users/{username}/repos`; otherwise, this app will show a dialog to tell user that the username is not found.\
+When typing in the input field, this page will show a recommendation list for best matched users.
 
 #### `Repos`
 

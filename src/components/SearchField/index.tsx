@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { useState } from 'react';
+
+import { Container, Input, List, Item } from './style';
 
 const conainerVariants = {
   isFocus: {
@@ -38,43 +38,26 @@ const listVariants = {
   },
 };
 
-const Container = styled(motion.div)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+type SearchFieldProps = {
+  onChange: (value: string) => void;
+};
 
-const Input = styled(motion.input)`
-  padding: 1rem 2rem;
-  border: none;
-  outline: none;
-  font-size: 2rem;
-`;
-
-const List = styled(motion.ul)`
-  width: 100%;
-  background-color: #fff;
-  color: #000;
-  list-style-type: none;
-  overflow: hidden;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-`;
-
-const Item = styled.li`
-  font-size: 1.5rem;
-  padding: 1rem 2rem;
-`;
-
-const SearchField = () => {
+const SearchField = ({ onChange }: SearchFieldProps) => {
   const [isFocus, setIsfocus] = useState(false);
+  const [value, setValue] = useState('');
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    setValue(e.target.value);
+    onChange(e.target.value);
+  };
 
   const animate = isFocus ? 'isFocus' : 'isBlur';
   return (
     <Container initial="isBlur" animate={animate} variants={conainerVariants}>
       <Input
+        value={value}
         variants={inputVariants}
+        onChange={handleChange}
         onFocus={() => setIsfocus(true)}
         onBlur={() => setIsfocus(false)}
       />

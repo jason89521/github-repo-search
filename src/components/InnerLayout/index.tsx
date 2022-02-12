@@ -1,18 +1,6 @@
-import styled from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import Button from 'components/Button';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  font-size: 1.5rem;
-`;
-
-const StyledButton = styled(Button)`
-  align-self: center;
-`;
+import { Container, StyledButton } from './style';
 
 const InnerLayout = () => {
   const navigate = useNavigate();

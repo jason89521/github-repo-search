@@ -1,14 +1,9 @@
 import styled from 'styled-components';
-import React from 'react';
 
 import Color from 'styles/color';
 import breakpoints from 'styles/breakpoints';
 
-type PropsType = {
-  children: React.ReactNode[] | React.ReactNode;
-};
-
-const Container = styled.div`
+export const Container = styled.div`
   padding: 5rem 0;
   min-height: 100vh;
   display: flex;
@@ -21,7 +16,7 @@ const Container = styled.div`
   }
 `;
 
-const Panel = styled.div`
+export const Panel = styled.div`
   width: 60%;
   padding: 5rem;
   border-radius: 10px;
@@ -41,13 +36,3 @@ const Panel = styled.div`
     padding: 2.5rem;
   }
 `;
-
-const OuterLayout = ({ children }: PropsType) => {
-  return (
-    <Container>
-      <Panel>{children}</Panel>
-    </Container>
-  );
-};
-
-export default OuterLayout;

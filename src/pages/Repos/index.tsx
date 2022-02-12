@@ -1,22 +1,12 @@
-import styled from 'styled-components';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'store';
 import { appendNext } from 'slices/repoListSlice';
+import { fetchRepos } from 'githubApi';
+import { Heading, List } from './style';
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
-import { fetchRepos } from 'githubApi';
-
-const Heading = styled.h1`
-  text-align: center;
-  font-size: 5rem;
-`;
-
-const List = styled.ul`
-  display: flex;
-  flex-direction: column;
-`;
 
 const Repos = () => {
   const { username = '' } = useParams();

@@ -1,22 +1,11 @@
-import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import type { RepoType, FileType } from 'type';
+import { RepoType, FileType } from 'type';
 import { fetchFiles, fetchRepo } from 'githubApi';
-import FilesList from 'components/FilesList';
+import { Heading, IconsBox } from './style';
+import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
-
-const IconsBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-`;
-
-const Heading = styled.h1`
-  display: flex;
-  align-items: center;
-`;
 
 const Repo = () => {
   const params = useParams();

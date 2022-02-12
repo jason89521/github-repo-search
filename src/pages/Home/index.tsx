@@ -1,38 +1,14 @@
 import axios from 'axios';
-import styled from 'styled-components';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from 'store';
 import { reset } from 'slices/repoListSlice';
 import { fetchRepos } from 'githubApi';
-import Svg from 'components/Svg';
+import { Container, Header, StyledSvg } from './style';
 import Form from 'components/Form';
 import Modal from 'components/Modal';
-import Dialog from 'components/Dialog ';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-`;
-
-const Header = styled.header`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
-
-  h1 {
-    font-size: 3rem;
-    text-align: center;
-  }
-`;
-
-const StyledSvg = styled(Svg)`
-  width: 15rem;
-  height: 15rem;
-`;
+import Dialog from 'components/Dialog';
 
 const Home = () => {
   const navigate = useNavigate();

@@ -1,19 +1,12 @@
-import styled from 'styled-components';
-
+import { Container } from './style';
 import Svg from 'components/Svg';
 
-type PropsType = {
+type IconProps = {
   message: string | number;
   href: string;
 };
 
-const Container = styled.span`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const Icon = ({ href, message }: PropsType) => {
+const Icon = ({ href, message }: IconProps) => {
   return (
     <Container>
       <Svg href={href} />

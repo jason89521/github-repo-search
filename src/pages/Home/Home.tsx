@@ -40,11 +40,9 @@ const Home = () => {
 
   return (
     <>
-      {showModal && (
-        <Modal>
-          <Dialog onClick={() => setShowModal(false)} message={errorMsg} />
-        </Modal>
-      )}
+      <Modal show={showModal}>
+        <Dialog onClick={() => setShowModal(false)} message={errorMsg} />
+      </Modal>
       <Container>
         <Header>
           <StyledSvg href="icon-github"></StyledSvg>

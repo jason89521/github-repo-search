@@ -7,7 +7,7 @@ import breakpoints from 'styles/breakpoints';
 export type LanguageType = keyof typeof langColors;
 
 export const Item = styled.li`
-  padding: 3rem 2rem;
+  padding: 3rem 0;
   font-size: 1.5rem;
   display: flex;
   flex-direction: column;

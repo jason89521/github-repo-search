@@ -1,8 +1,19 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import Color from 'styles/color';
 
-export const Container = styled.div`
+export const containerVariants = {
+  hidden: {
+    opacity: 0,
+    transition: { when: 'afterChildren' },
+  },
+  visible: {
+    opacity: 1,
+  },
+};
+
+export const Container = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;

@@ -1,15 +1,17 @@
 import ReactDOM from 'react-dom';
 import React, { useEffect, useRef } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
-import { Container } from './Modal.style';
+import { containerVariants, Container } from './Modal.style';
 
 type ModalProps = {
+  show: boolean;
   children: React.ReactNode[] | React.ReactNode;
 };
 
 const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
 
-const Modal = ({ children }: ModalProps) => {
+const Modal = ({ show, children }: ModalProps) => {
   const elRef = useRef(document.createElement('div'));
 
   useEffect(() => {
@@ -21,7 +23,21 @@ const Modal = ({ children }: ModalProps) => {
     };
   }, []);
 
-  const renderedContent = <Container>{children}</Container>;
+  const renderedContent = (
+    <AnimatePresence>
+      {show ? (
+        <Container
+          key="modal"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
+          {children}
+        </Container>
+      ) : null}
+    </AnimatePresence>
+  );
   return ReactDOM.createPortal(renderedContent, elRef.current);
 };
 

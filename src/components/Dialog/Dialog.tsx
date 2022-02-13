@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import { Container, StyledButton } from './Dialog.style';
+import { containerVariants, Container, StyledButton } from './Dialog.style';
 
 type DialogProps = {
   message: string;
@@ -15,7 +15,7 @@ const Dialog = ({ message, onClick }: DialogProps) => {
   }, []);
 
   return (
-    <Container>
+    <Container variants={containerVariants}>
       {message}
       <StyledButton ref={buttonRef} onClick={onClick}>
         OK

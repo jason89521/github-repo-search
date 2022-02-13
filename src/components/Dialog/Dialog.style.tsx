@@ -1,9 +1,19 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import Color from 'styles/color';
 import Button from 'components/Button';
 
-export const Container = styled.div`
+export const containerVariants = {
+  hidden: {
+    y: '-100vh',
+  },
+  visible: {
+    y: 0,
+  },
+};
+
+export const Container = styled(motion.div)`
   padding: 2rem;
   width: 70%;
   min-height: 20rem;

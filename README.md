@@ -30,6 +30,7 @@ This file contains all apis to fetch data from github, including:
 - Fetch the list of repositories.
 - Fetch a single repository.
 - Fetch the contents of a single repository.
+- Search the users that best match the search term.
 
 ### `store.tsx`
 

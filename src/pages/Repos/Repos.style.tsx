@@ -9,3 +9,9 @@ export const List = styled.ul`
   display: flex;
   flex-direction: column;
 `;
+
+export const LoaderBox = styled.div`
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+`;

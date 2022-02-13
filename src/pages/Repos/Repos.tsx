@@ -4,9 +4,10 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'store';
 import { appendNext } from 'slices/repoListSlice';
 import { fetchRepos } from 'githubApi';
-import { Heading, List } from './Repos.style';
+import { Heading, List, LoaderBox } from './Repos.style';
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
+import Loader from 'components/Loader';
 
 const Repos = () => {
   const { username = '' } = useParams();
@@ -32,7 +33,16 @@ const Repos = () => {
     <>
       <Heading>{username}</Heading>
 
-      <InfiniteScroll next={fetchNext} hasMore={hasMore} isLoading={isLoading}>
+      <InfiniteScroll
+        next={fetchNext}
+        hasMore={hasMore}
+        isLoading={isLoading}
+        loader={
+          <LoaderBox>
+            <Loader />
+          </LoaderBox>
+        }
+      >
         <List>{renderedRepos}</List>
       </InfiniteScroll>
     </>

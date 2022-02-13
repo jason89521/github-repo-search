@@ -2,13 +2,22 @@ import React, { useEffect } from 'react';
 import { useIntersection } from '@yuxuan-zheng/hooks';
 
 type InfiniteScrollProps = {
+  className?: string;
   hasMore: boolean;
   isLoading: boolean;
   children: React.ReactNode[] | React.ReactNode;
+  loader?: React.ReactNode;
   next: () => any;
 };
 
-const InfiniteScroll = ({ hasMore, isLoading, children, next }: InfiniteScrollProps) => {
+const InfiniteScroll = ({
+  className,
+  hasMore,
+  isLoading,
+  children,
+  loader,
+  next,
+}: InfiniteScrollProps) => {
   const [isBottom, lastRef] = useIntersection();
 
   useEffect(() => {
@@ -20,9 +29,9 @@ const InfiniteScroll = ({ hasMore, isLoading, children, next }: InfiniteScrollPr
   }, [isBottom]);
 
   return (
-    <div>
+    <div className={className}>
       {children}
-      <div ref={lastRef}></div>
+      <div ref={lastRef}>{isLoading && loader}</div>
     </div>
   );
 };

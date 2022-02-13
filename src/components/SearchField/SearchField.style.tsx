@@ -2,47 +2,38 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const conainerVariants = {
-  isFocus: {
+  focus: {
     transition: {
       staggerChildren: 0.2,
     },
   },
-  isBlur: {
+  blur: {
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.4,
       staggerDirection: -1,
     },
   },
 };
 
 export const inputVariants = {
-  isFocus: {
+  focus: {
     width: '100%',
     borderRadius: '10px 10px 0 0 ',
   },
-  isBlur: {
+  blur: {
     borderRadius: '10rem',
     width: '50%',
   },
 };
 
 export const listVariants = {
-  isFocus: {
+  focus: {
     opacity: 1,
     maxHeight: '20rem',
   },
-  isBlur: {
+  blur: {
     opacity: 0,
     maxHeight: 0,
-  },
-};
-
-export const itemVariants = {
-  isFocus: {
-    height: 'auto',
-  },
-  isBlur: {
-    height: 0,
   },
 };
 

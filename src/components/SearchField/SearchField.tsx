@@ -49,9 +49,9 @@ const SearchField = ({
     ) : (
       <Item>{defaultString}</Item>
     );
-  const animate = isFocus ? 'isFocus' : 'isBlur';
+  const animate = isFocus ? 'focus' : 'blur';
   return (
-    <Container initial="isBlur" animate={animate} variants={conainerVariants}>
+    <Container initial="blur" animate={animate} variants={conainerVariants}>
       <Input
         disabled={disabled}
         placeholder="Enter an username"

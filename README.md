@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## [Live Demo](https://dcard-homework.vercel.app/)
+
 ## Get Started
 
 1. clone this project
@@ -18,7 +20,7 @@ The following section will describe what the files or folders do in the `src` fo
 
 ### `index.tsx` 
 
-Global style and `BrowserRouter` are added in this file, and the `App` component is rendered in this file also.
+Global styles, Redux `store` and `BrowserRouter` are added in this file, and the `App` component is rendered in this file also.
 
 ### `App.tsx`
 
@@ -75,5 +77,3 @@ This folder contains the slices of Redux.
 - [axios](https://github.com/axios/axios)
 - [framer motion](https://github.com/framer/motion)
 - [yuxuan-zheng/hooks](https://github.com/jason89521/hooks)
-
-## [Live Demo](https://dcard-homework.vercel.app/)

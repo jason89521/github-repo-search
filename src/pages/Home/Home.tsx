@@ -6,11 +6,12 @@ import { useAppDispatch } from 'store';
 import { reset } from 'slices/repoListSlice';
 import { fetchRepos } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
+import PageProps from 'pages/PageProps';
 import Form from 'components/Form';
 import Modal from 'components/Modal';
 import Dialog from 'components/Dialog';
 
-const Home = () => {
+const Home = ({ variants, initial, animate, exit }: PageProps) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -43,7 +44,7 @@ const Home = () => {
       <Modal show={showModal}>
         <Dialog onClick={() => setShowModal(false)} message={errorMsg} />
       </Modal>
-      <Container>
+      <Container variants={variants} initial={initial} animate={animate} exit={exit}>
         <Header>
           <StyledSvg href="icon-github"></StyledSvg>
           <h1>Github Repositories</h1>

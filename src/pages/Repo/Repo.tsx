@@ -3,28 +3,21 @@ import { useEffect, useState } from 'react';
 
 import { RepoType, FileType } from 'type';
 import { fetchFiles, fetchRepo } from 'githubApi';
-import { Heading, IconsBox } from './Repo.style';
+import { Container, Heading, IconsBox } from './Repo.style';
+import PageProps from 'pages/PageProps';
 import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
 
-const Repo = () => {
+const Repo = ({ variants, initial, animate, exit }: PageProps) => {
   const params = useParams();
-  const [repo, setRepo] = useState<RepoType>({} as RepoType);
+  const [repo, setRepo] = useState<RepoType>();
   const [files, setFiles] = useState<FileType[]>([]);
 
   useEffect(() => {
     const fetchRepoData = async () => {
       if (!params.username || !params.repo) return;
-      let repoData: RepoType;
-      let filesData: FileType[];
-      try {
-        repoData = (await fetchRepo(params.username, params.repo)).data;
-        filesData = (await fetchFiles(params.username, params.repo)).data;
-      } catch (error) {
-        console.error(error);
-        return;
-      }
-
+      const repoData = (await fetchRepo(params.username, params.repo)).data;
+      const filesData = (await fetchFiles(params.username, params.repo)).data;
       setRepo(repoData);
       const sortedFiles = filesData.sort((a, b) => {
         if (a.type === 'dir') return b.type === 'dir' ? 0 : -1;
@@ -36,11 +29,14 @@ const Repo = () => {
     fetchRepoData();
   }, [params]);
 
+  // Return null such that the animation can execute correctly when mounted
+  if (!repo) return null;
+
   const { full_name, description, html_url, stargazers_count, forks_count, open_issues_count } =
     repo;
 
   return (
-    <>
+    <Container variants={variants} initial={initial} animate={animate} exit={exit}>
       <Heading>
         <a href={html_url} target="_blank" rel="noreferrer">
           {full_name}
@@ -53,7 +49,7 @@ const Repo = () => {
         <Icon href="icon-issue" message={open_issues_count} />
       </IconsBox>
       <FilesList files={files} />
-    </>
+    </Container>
   );
 };
 

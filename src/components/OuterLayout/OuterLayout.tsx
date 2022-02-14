@@ -1,15 +1,14 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 import { Container, Panel } from './OuterLayout.style';
 
-interface OuterLayoutProps {
-  children: React.ReactNode[] | React.ReactNode;
-}
-
-const OuterLayout = ({ children }: OuterLayoutProps) => {
+const OuterLayout = () => {
   return (
     <Container>
-      <Panel>{children}</Panel>
+      <Panel>
+        <Outlet />
+      </Panel>
     </Container>
   );
 };

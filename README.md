@@ -68,6 +68,10 @@ This folder contains all components each page may need.
 
 This folder contains the slices of Redux.
 
+### `types`
+
+Define types that may be used in other files.
+
 ## Built with
 
 - [React](https://github.com/facebook/react)

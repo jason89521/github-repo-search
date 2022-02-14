@@ -1,17 +1,17 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import withAnimation from 'hocs/withAnimation';
 import RepoInfo from 'types/RepoInfo';
 import FileInfo from 'types/FileInfo';
 import { fetchFiles, fetchRepo } from 'githubApi';
 import { Container, Heading, IconsBox } from './Repo.style';
-import PageProps from 'types/PageProps';
 import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
 
-const Repo = ({ variants, initial, animate, exit }: PageProps) => {
+const Repo = () => {
   const params = useParams();
-  const [repo, setRepo] = useState<RepoInfo>();
+  const [repo, setRepo] = useState<RepoInfo>({} as RepoInfo);
   const [files, setFiles] = useState<FileInfo[]>([]);
 
   useEffect(() => {
@@ -40,14 +40,11 @@ const Repo = ({ variants, initial, animate, exit }: PageProps) => {
     };
   }, [params.username, params.repo]);
 
-  // Return null such that the animation can execute correctly when mounted
-  if (!repo) return null;
-
   const { full_name, description, html_url, stargazers_count, forks_count, open_issues_count } =
     repo;
 
   return (
-    <Container variants={variants} initial={initial} animate={animate} exit={exit}>
+    <Container>
       <Heading>
         <a href={html_url} target="_blank" rel="noreferrer">
           {full_name}
@@ -64,4 +61,4 @@ const Repo = ({ variants, initial, animate, exit }: PageProps) => {
   );
 };
 
-export default Repo;
+export default withAnimation(Repo);

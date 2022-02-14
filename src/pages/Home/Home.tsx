@@ -2,16 +2,16 @@ import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch } from 'store';
 import { reset } from 'slices/repoListSlice';
 import { fetchRepos } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
-import PageProps from 'types/PageProps';
 import Form from 'components/Form';
 import Modal from 'components/Modal';
 import Dialog from 'components/Dialog';
 
-const Home = ({ variants, initial, animate, exit }: PageProps) => {
+const Home = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -44,7 +44,7 @@ const Home = ({ variants, initial, animate, exit }: PageProps) => {
       <Modal show={showModal}>
         <Dialog onClick={() => setShowModal(false)} message={errorMsg} />
       </Modal>
-      <Container variants={variants} initial={initial} animate={animate} exit={exit}>
+      <Container>
         <Header>
           <StyledSvg href="icon-github"></StyledSvg>
           <h1>Github Repositories</h1>
@@ -56,4 +56,4 @@ const Home = ({ variants, initial, animate, exit }: PageProps) => {
   );
 };
 
-export default Home;
+export default withAnimation(Home);

@@ -15,10 +15,16 @@ const Repo = ({ variants, initial, animate, exit }: PageProps) => {
   const [files, setFiles] = useState<FileInfo[]>([]);
 
   useEffect(() => {
+    // Use this value to prevent setting state after unmounted
+    let cancel = false;
     const fetchRepoData = async () => {
       if (!params.username || !params.repo) return;
+
       const repoData = (await fetchRepo(params.username, params.repo)).data;
       const filesData = (await fetchFiles(params.username, params.repo)).data;
+
+      if (cancel) return;
+
       setRepo(repoData);
       const sortedFiles = filesData.sort((a, b) => {
         if (a.type === 'dir') return b.type === 'dir' ? 0 : -1;
@@ -28,7 +34,11 @@ const Repo = ({ variants, initial, animate, exit }: PageProps) => {
     };
 
     fetchRepoData();
-  }, [params]);
+
+    return () => {
+      cancel = true;
+    };
+  }, [params.username, params.repo]);
 
   // Return null such that the animation can execute correctly when mounted
   if (!repo) return null;

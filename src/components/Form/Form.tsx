@@ -32,17 +32,19 @@ const Form = ({ isSubmitting, onFormSubmit }: FormProps) => {
   useEffect(() => {
     if (!/\S/.test(debouncedUsername)) return;
 
-    // Use this value to prevent setting state after unmount.
-    let canExecute = true;
+    // Use this value to prevent setting state after unmounted
+    let cancel = false;
     const search = async () => {
       const res = await searchUser(debouncedUsername);
-      canExecute && setRecommendList(res.data.items.map((item: { login: string }) => item.login));
+      if (cancel) return;
+
+      setRecommendList(res.data.items.map((item: { login: string }) => item.login));
     };
 
     search();
 
     return () => {
-      canExecute = false;
+      cancel = true;
     };
   }, [debouncedUsername]);
 

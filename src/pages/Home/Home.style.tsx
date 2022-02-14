@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 import Svg from 'components/Svg';
-import { motion } from 'framer-motion';
 
-export const Container = styled(motion.div)`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5rem;

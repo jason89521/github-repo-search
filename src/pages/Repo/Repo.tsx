@@ -8,10 +8,11 @@ import { fetchFiles, fetchRepo } from 'githubApi';
 import { Container, Heading, IconsBox } from './Repo.style';
 import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
+import Skeleton from 'components/Skeleton';
 
 const Repo = () => {
   const params = useParams();
-  const [repo, setRepo] = useState<RepoInfo>({} as RepoInfo);
+  const [repo, setRepo] = useState<RepoInfo>();
   const [files, setFiles] = useState<FileInfo[]>([]);
 
   useEffect(() => {
@@ -39,6 +40,24 @@ const Repo = () => {
       cancel = true;
     };
   }, [params.username, params.repo]);
+
+  // if the repo have not been fetched, render the skeleton
+  if (!repo) {
+    return (
+      <Container>
+        <Skeleton height="5rem" />
+        <Skeleton height="3rem" />
+        <IconsBox>
+          <Skeleton width='3rem' height="1.5rem" />
+          <Skeleton width='3rem' height="1.5rem" />
+          <Skeleton width='3rem' height="1.5rem" />
+        </IconsBox>
+        <Skeleton height="2rem" />
+        <Skeleton height="2rem" />
+        <Skeleton height="2rem" />
+      </Container>
+    );
+  }
 
   const { full_name, description, html_url, stargazers_count, forks_count, open_issues_count } =
     repo;

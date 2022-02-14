@@ -31,6 +31,9 @@ const withAnimation = <T extends {}>(WrappedComponent: React.ComponentType<T>) =
     );
   };
 
+  const displayName = WrappedComponent.displayName || WrappedComponent.name;
+  ComponentWithAnimation.displayName = `withAnimation(${displayName})`;
+
   return ComponentWithAnimation;
 };
 

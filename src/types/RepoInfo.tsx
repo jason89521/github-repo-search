@@ -1,4 +1,4 @@
-export type RepoType = {
+export default interface RepoInfo {
   id: number;
   stargazers_count: number;
   forks_count: number;
@@ -8,10 +8,4 @@ export type RepoType = {
   description: string;
   html_url: string;
   language: string;
-};
-
-export type FileType = {
-  name: string;
-  type: string;
-  html_url: string;
-};
+}

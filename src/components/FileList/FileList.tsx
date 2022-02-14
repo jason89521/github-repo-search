@@ -1,10 +1,10 @@
 import { List, Item, FileLink } from './FileList.style';
 
+import FileInfo from 'types/FileInfo';
 import Svg from 'components/Svg';
-import { FileType } from 'type';
 
 type FileListProps = {
-  files: FileType[];
+  files: FileInfo[];
 };
 
 const FilesList = ({ files }: FileListProps) => {

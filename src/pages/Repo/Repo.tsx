@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { RepoType, FileType } from 'type';
+import RepoInfo from 'types/RepoInfo';
+import FileInfo from 'types/FileInfo';
 import { fetchFiles, fetchRepo } from 'githubApi';
 import { Container, Heading, IconsBox } from './Repo.style';
 import PageProps from 'pages/PageProps';
@@ -10,8 +11,8 @@ import Icon from 'components/Icon';
 
 const Repo = ({ variants, initial, animate, exit }: PageProps) => {
   const params = useParams();
-  const [repo, setRepo] = useState<RepoType>();
-  const [files, setFiles] = useState<FileType[]>([]);
+  const [repo, setRepo] = useState<RepoInfo>();
+  const [files, setFiles] = useState<FileInfo[]>([]);
 
   useEffect(() => {
     const fetchRepoData = async () => {

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import type { RepoType } from 'type';
+import RepoInfo from 'types/RepoInfo';
 
 type ReposListState = {
-  data: RepoType[];
+  data: RepoInfo[];
   page: number;
 };
 
@@ -15,11 +15,11 @@ const reposListSlice = createSlice({
   name: 'reposList',
   initialState,
   reducers: {
-    reset: (state, action: PayloadAction<RepoType[]>) => {
+    reset: (state, action: PayloadAction<RepoInfo[]>) => {
       state.data = action.payload;
       state.page = 1;
     },
-    appendNext: (state, action: PayloadAction<RepoType[]>) => {
+    appendNext: (state, action: PayloadAction<RepoInfo[]>) => {
       state.data = [...state.data, ...action.payload];
       state.page += 1;
     },

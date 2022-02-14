@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 
+import RepoInfo from 'types/RepoInfo';
 import { Item, Infos, Language, LanguageType } from './RepoItem.style';
-import { RepoType } from 'type';
 import Icon from 'components/Icon';
 
 type RepoItemProps = {
-  repo: RepoType;
+  repo: RepoInfo;
 };
 
 const RepoItem = ({ repo }: RepoItemProps) => {

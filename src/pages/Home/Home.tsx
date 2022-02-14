@@ -6,7 +6,7 @@ import { useAppDispatch } from 'store';
 import { reset } from 'slices/repoListSlice';
 import { fetchRepos } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
-import PageProps from 'pages/PageProps';
+import PageProps from 'types/PageProps';
 import Form from 'components/Form';
 import Modal from 'components/Modal';
 import Dialog from 'components/Dialog';

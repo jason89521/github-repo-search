@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from 'store';
 import { appendNext } from 'slices/repoListSlice';
 import { fetchRepos } from 'githubApi';
 import { Heading, List, LoaderBox } from './Repos.style';
-import PageProps from 'pages/PageProps';
+import PageProps from 'types/PageProps';
 import RepoItem from 'components/RepoItem';
 import InfiniteScroll from 'components/InfiniteScroll';
 import Loader from 'components/Loader';

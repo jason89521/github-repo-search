@@ -5,7 +5,7 @@ import RepoInfo from 'types/RepoInfo';
 import FileInfo from 'types/FileInfo';
 import { fetchFiles, fetchRepo } from 'githubApi';
 import { Container, Heading, IconsBox } from './Repo.style';
-import PageProps from 'pages/PageProps';
+import PageProps from 'types/PageProps';
 import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
 

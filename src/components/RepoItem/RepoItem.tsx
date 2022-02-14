@@ -4,9 +4,9 @@ import RepoInfo from 'types/RepoInfo';
 import { Item, Infos, Language, LanguageType } from './RepoItem.style';
 import Icon from 'components/Icon';
 
-type RepoItemProps = {
+interface RepoItemProps {
   repo: RepoInfo;
-};
+}
 
 const RepoItem = ({ repo }: RepoItemProps) => {
   const { name, description, language, stargazers_count, forks_count, open_issues_count } = repo;

@@ -3,9 +3,9 @@ import { List, Item, FileLink } from './FileList.style';
 import FileInfo from 'types/FileInfo';
 import Svg from 'components/Svg';
 
-type FileListProps = {
+interface FileListProps {
   files: FileInfo[];
-};
+}
 
 const FilesList = ({ files }: FileListProps) => {
   return (

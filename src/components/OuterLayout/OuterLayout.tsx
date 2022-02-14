@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Container, Panel } from './OuterLayout.style';
 
-type OuterLayoutProps = {
+interface OuterLayoutProps {
   children: React.ReactNode[] | React.ReactNode;
-};
+}
 
 const OuterLayout = ({ children }: OuterLayoutProps) => {
   return (

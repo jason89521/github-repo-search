@@ -2,10 +2,10 @@ import React from 'react';
 
 import { containerVariants, Container, StyledButton } from './Dialog.style';
 
-type DialogProps = {
+interface DialogProps {
   message: string;
   onClick: React.MouseEventHandler;
-};
+}
 
 const Dialog = ({ message, onClick }: DialogProps) => {
   return (

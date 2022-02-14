@@ -4,10 +4,10 @@ import { AnimatePresence } from 'framer-motion';
 
 import { containerVariants, Container } from './Modal.style';
 
-type ModalProps = {
+interface ModalProps {
   show: boolean;
   children: React.ReactNode[] | React.ReactNode;
-};
+}
 
 const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
 

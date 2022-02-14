@@ -11,13 +11,13 @@ import {
   Item,
 } from './SearchField.style';
 
-type SearchFieldProps = {
+interface SearchFieldProps {
   defaultString: string;
   data: string[];
   disabled: boolean;
   onChange: (value: string) => void;
   onClickItem: (value: string) => void;
-};
+}
 
 const SearchField = ({
   defaultString,

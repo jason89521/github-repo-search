@@ -1,10 +1,10 @@
 import { Container } from './Svg.style';
 import sprite from 'sprite.svg';
 
-type SvgProps = {
+interface SvgProps {
   className?: string;
   href: string;
-};
+}
 
 const Svg = ({ className, href }: SvgProps) => {
   return (

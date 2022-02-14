@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useIntersection } from '@yuxuan-zheng/hooks';
 
-type InfiniteScrollProps = {
+interface InfiniteScrollProps {
   className?: string;
   hasMore: boolean;
   isLoading: boolean;
   children: React.ReactNode[] | React.ReactNode;
   loader?: React.ReactNode;
   next: () => any;
-};
+}
 
 const InfiniteScroll = ({
   className,

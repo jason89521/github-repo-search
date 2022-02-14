@@ -1,10 +1,10 @@
 import { Container } from './Icon.style';
 import Svg from 'components/Svg';
 
-type IconProps = {
+interface IconProps {
   message: string | number;
   href: string;
-};
+}
 
 const Icon = ({ href, message }: IconProps) => {
   return (

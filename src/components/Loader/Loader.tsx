@@ -1,8 +1,8 @@
 import { Container } from './Loader.style';
 
-type LoaderProps = {
+interface LoaderProps {
   className?: string;
-};
+}
 
 const Loader = ({ className }: LoaderProps) => {
   return (

@@ -6,10 +6,10 @@ import { Container } from './Form.style';
 import Button from 'components/Button';
 import SearchField from 'components/SearchField';
 
-type FormProps = {
+interface FormProps {
   isSubmitting: boolean;
   onFormSubmit: (username: string) => void;
-};
+}
 
 const Form = ({ isSubmitting, onFormSubmit }: FormProps) => {
   const [username, setUsername] = useState('');

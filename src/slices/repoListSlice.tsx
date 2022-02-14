@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import RepoInfo from 'types/RepoInfo';
 
-type ReposListState = {
+interface ReposListState {
   data: RepoInfo[];
   page: number;
-};
+}
 
 // Set page to 0 such that if this app is directly opened with url = /users/:username/repos,
 // the repos page would not fetch data from page 2.

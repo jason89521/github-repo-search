@@ -30,8 +30,6 @@ The `App` component configures the structure of the router.
 
 This file contains all apis to fetch data from github, including:
 - Fetch the list of repositories.
-- Fetch a single repository.
-- Fetch the contents of a single repository.
 - Search the users that best match the search term.
 
 ### `store.tsx`
@@ -54,7 +52,7 @@ In this page, user can type an username to search the repositories. When form is
 
 #### `Repos`
 
-User in `/users/{username}/repos` will see this page. This page will display `{username}` in the top and the repositories list of `{username}`. The repositories list will show 10 repositories at first time until user scrolls down to the bottom. If the `{username}` has more repositories, then append next 10 repositories to the list.
+When users scrolls down to the bottom of this page, this page will fethc the next 10 repositories to the redux store.
 
 #### `Repo`
 

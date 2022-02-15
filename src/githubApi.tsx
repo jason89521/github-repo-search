@@ -16,7 +16,7 @@ export const fetchRepos = (username: string, pageNumber = 1) => {
 };
 
 export const searchUser = (username: string) => {
-  return githubApi.get('/search/users', { params: { q: username, per_page: 3 } });
+  return githubApi.get('/search/users', { params: { q: username, per_page: 5 } });
 };
 
 export default githubApi;

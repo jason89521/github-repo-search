@@ -50,15 +50,15 @@ There are three pages in this app, `Home`, `Repos` and `Repo`. This folder conta
 
 #### `Home`
 
-In this page, user can type an username to search the repositories. If the username exists, this app will redirect user to `/users/{username}/repos`; otherwise, this app will show a dialog to tell user that the username is not found.\
-When typing in the input field, this page will show a recommendation list for best matched users.
+In this page, user can type an username to search the repositories. When form is submitted and the search username exists, this page will fetch the list of repositories to the redux store, and then redirect to `users/:username/repos`.
 
 #### `Repos`
 
 User in `/users/{username}/repos` will see this page. This page will display `{username}` in the top and the repositories list of `{username}`. The repositories list will show 10 repositories at first time until user scrolls down to the bottom. If the `{username}` has more repositories, then append next 10 repositories to the list.
 
 #### `Repo`
-In the `Repos` page, if user click the repository's name, this app will redirect user to `/users/{username}/repos/{repo}`, and this component will be mounted on this page. In addition to the general information about the repository, this page also shows the files of the repository. User can click the name of the repository to open a new tab about the repository in github, or click each file to open a new tab about the file in github.
+
+Use RTK query to chech fetched data for 5 minutes such that this page will not make a request with the same username and reponame.
 
 ### `components`
 

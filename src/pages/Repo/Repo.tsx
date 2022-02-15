@@ -1,56 +1,32 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 import withAnimation from 'hocs/withAnimation';
-import RepoInfo from 'types/RepoInfo';
-import FileInfo from 'types/FileInfo';
-import { fetchFiles, fetchRepo } from 'githubApi';
+import { useGetRepoQuery, useGetFilesQuery } from 'redux/repoApi';
 import { Container, Heading, IconsBox } from './Repo.style';
 import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
 import Skeleton from 'components/Skeleton';
 
 const Repo = () => {
-  const params = useParams();
-  const [repo, setRepo] = useState<RepoInfo>();
-  const [files, setFiles] = useState<FileInfo[]>([]);
+  const params = useParams() as { username: string; repo: string };
+  const { data: repo } = useGetRepoQuery({
+    username: params.username,
+    repo: params.repo,
+  });
+  const { data: files = [] } = useGetFilesQuery({
+    username: params.username,
+    repo: params.repo,
+  });
 
-  useEffect(() => {
-    // Use this value to prevent setting state after unmounted
-    let cancel = false;
-    const fetchRepoData = async () => {
-      if (!params.username || !params.repo) return;
-
-      const repoData = (await fetchRepo(params.username, params.repo)).data;
-      const filesData = (await fetchFiles(params.username, params.repo)).data;
-
-      if (cancel) return;
-
-      setRepo(repoData);
-      const sortedFiles = filesData.sort((a, b) => {
-        if (a.type === 'dir') return b.type === 'dir' ? 0 : -1;
-        return b.type === 'dir' ? 1 : 0;
-      });
-      setFiles(sortedFiles);
-    };
-
-    fetchRepoData();
-
-    return () => {
-      cancel = true;
-    };
-  }, [params.username, params.repo]);
-
-  // if the repo have not been fetched, render the skeleton
   if (!repo) {
     return (
       <Container>
         <Skeleton height="5rem" />
         <Skeleton height="3rem" />
         <IconsBox>
-          <Skeleton width='3rem' height="1.5rem" />
-          <Skeleton width='3rem' height="1.5rem" />
-          <Skeleton width='3rem' height="1.5rem" />
+          <Skeleton width="3rem" height="1.5rem" />
+          <Skeleton width="3rem" height="1.5rem" />
+          <Skeleton width="3rem" height="1.5rem" />
         </IconsBox>
         <Skeleton height="2rem" />
         <Skeleton height="2rem" />

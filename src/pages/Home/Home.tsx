@@ -3,8 +3,8 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch } from 'store';
-import { reset } from 'slices/repoListSlice';
+import { useAppDispatch } from 'redux/store';
+import { reset } from 'redux/repoListSlice';
 import { fetchRepos } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';

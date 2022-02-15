@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch, useAppSelector } from 'store';
-import { appendNext } from 'slices/repoListSlice';
+import { useAppDispatch, useAppSelector } from 'redux/store';
+import { appendNext } from 'redux/repoListSlice';
 import { fetchRepos } from 'githubApi';
 import { Heading, List, LoaderBox } from './Repos.style';
 import RepoItem from 'components/RepoItem';

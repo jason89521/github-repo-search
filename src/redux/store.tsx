@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
+import modalSlice from './modalSlice';
 import repoListSlice from 'redux/repoListSlice';
 import { repoApi } from './repoApi';
 
 const store = configureStore({
   reducer: {
+    modal: modalSlice.reducer,
     reposList: repoListSlice.reducer,
     [repoApi.reducerPath]: repoApi.reducer,
   },

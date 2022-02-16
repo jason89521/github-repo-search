@@ -5,18 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch } from 'redux/store';
 import { reset } from 'redux/repoListSlice';
-import { fetchRepos } from 'githubApi';
+import { show, setMessage } from 'redux/modalSlice';
+import { fetchRepos, searchUser } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
-import Modal from 'components/Modal';
-import Dialog from 'components/Dialog';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+
   const onFormSubmit = useCallback(
     async (username: string) => {
       setIsSubmitting(true);
@@ -24,35 +22,46 @@ const Home = () => {
       try {
         response = await fetchRepos(username);
       } catch (error) {
+        dispatch(show());
         if (axios.isAxiosError(error)) {
-          setShowModal(true);
-          setErrorMsg(error.response?.data.message);
+          dispatch(setMessage(error.response?.data.message));
+          return;
         }
+        dispatch(setMessage('Unexpected error'));
         return;
       } finally {
         setIsSubmitting(false);
       }
 
-      appDispatch(reset(response.data));
+      dispatch(reset(response.data));
       navigate(`users/${username}/repos`);
     },
-    [appDispatch, navigate]
+    [dispatch, navigate]
   );
+  
+  const handleDebounced = useCallback(async (debounced: string) => {
+    try {
+      const res = await searchUser(debounced);
+      return res.data.items.map(item => item.login);
+    } catch (error) {
+      return [];
+    }
+  }, []);
 
   return (
-    <>
-      <Modal show={showModal}>
-        <Dialog onClick={() => setShowModal(false)} message={errorMsg} />
-      </Modal>
-      <Container>
-        <Header>
-          <StyledSvg href="icon-github"></StyledSvg>
-          <h1>Github Repositories</h1>
-        </Header>
+    <Container>
+      <Header>
+        <StyledSvg href="icon-github"></StyledSvg>
+        <h1>Github Repositories</h1>
+      </Header>
 
-        <Form isSubmitting={isSubmitting} onFormSubmit={onFormSubmit} />
-      </Container>
-    </>
+      <Form
+        isSubmitting={isSubmitting}
+        recommendList={[]}
+        onFormSubmit={onFormSubmit}
+        onDebounced={handleDebounced}
+      />
+    </Container>
   );
 };
 

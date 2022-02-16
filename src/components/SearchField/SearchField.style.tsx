@@ -29,7 +29,7 @@ export const inputVariants = {
 export const listVariants = {
   focus: {
     opacity: 1,
-    maxHeight: '20rem',
+    maxHeight: 1000
   },
   blur: {
     opacity: 0,

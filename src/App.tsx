@@ -1,27 +1,38 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
-import InnerLayout from 'components/InnerLayout';
+import { useAppSelector, useAppDispatch } from 'redux/store';
+import { hide } from 'redux/modalSlice';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
 import OuterLayout from 'components/OuterLayout';
+import InnerLayout from 'components/InnerLayout';
+import Modal from 'components/Modal';
+import Dialog from 'components/Dialog';
 
 const App = () => {
   const location = useLocation();
+  const modal = useAppSelector(state => state.modal);
+  const dispatch = useAppDispatch();
 
   return (
-    <AnimatePresence exitBeforeEnter>
-      <Routes location={location} key={location.key}>
-        <Route path="/" element={<OuterLayout />}>
-          <Route index element={<Home />} />
-          <Route path="users/:username/repos" element={<InnerLayout />}>
-            <Route index element={<Repos />} />
-            <Route path=":repo" element={<Repo />} />
+    <>
+      <Modal show={modal.show}>
+        <Dialog message={modal.message} onClick={() => dispatch(hide())} />
+      </Modal>
+      <AnimatePresence exitBeforeEnter>
+        <Routes location={location} key={location.key}>
+          <Route path="/" element={<OuterLayout />}>
+            <Route index element={<Home />} />
+            <Route path="users/:username/repos" element={<InnerLayout />}>
+              <Route index element={<Repos />} />
+              <Route path=":repo" element={<Repo />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </AnimatePresence>
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 };
 

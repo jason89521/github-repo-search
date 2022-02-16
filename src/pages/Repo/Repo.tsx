@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import withAnimation from 'hocs/withAnimation';
+import { useAppDispatch } from 'redux/store';
+import { show, setMessage } from 'redux/modalSlice';
 import { useGetRepoQuery, useGetFilesQuery } from 'redux/repoApi';
 import { Container, Heading, IconsBox } from './Repo.style';
 import FilesList from 'components/FileList';
@@ -9,14 +12,30 @@ import Skeleton from 'components/Skeleton';
 
 const Repo = () => {
   const params = useParams() as { username: string; repo: string };
-  const { data: repo } = useGetRepoQuery({
+  const dispatch = useAppDispatch();
+  const { data: repo, error: repoError } = useGetRepoQuery({
     username: params.username,
     repo: params.repo,
   });
-  const { data: files = [] } = useGetFilesQuery({
+  const { data: files = [], error: filesError } = useGetFilesQuery({
     username: params.username,
     repo: params.repo,
   });
+
+  useEffect(() => {
+    if (!repoError && !filesError) return;
+
+    dispatch(show());
+    if (repoError && 'status' in repoError) {
+      dispatch(setMessage(repoError.data.message));
+      return;
+    }
+    if (filesError && 'data' in filesError) {
+      dispatch(setMessage(filesError.data.message));
+      return;
+    }
+    dispatch(setMessage('Unexpected error'));
+  }, [dispatch, repoError, filesError]);
 
   if (!repo) {
     return (

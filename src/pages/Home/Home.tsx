@@ -13,7 +13,7 @@ import Form from 'components/Form';
 const Home = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const onFormSubmit = useCallback(
     async (username: string) => {
@@ -22,21 +22,21 @@ const Home = () => {
       try {
         response = await fetchRepos(username);
       } catch (error) {
-        appDispatch(show());
+        dispatch(show());
         if (axios.isAxiosError(error)) {
-          appDispatch(setMessage(error.response?.data.message));
+          dispatch(setMessage(error.response?.data.message));
           return;
         }
-        appDispatch(setMessage('Unexpected error'));
+        dispatch(setMessage('Unexpected error'));
         return;
       } finally {
         setIsSubmitting(false);
       }
 
-      appDispatch(reset(response.data));
+      dispatch(reset(response.data));
       navigate(`users/${username}/repos`);
     },
-    [appDispatch, navigate]
+    [dispatch, navigate]
   );
   
   const handleDebounced = useCallback(async (debounced: string) => {

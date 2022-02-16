@@ -6,17 +6,20 @@ import Button from 'components/Button';
 
 export const containerVariants = {
   hidden: {
-    y: '-100vh',
+    y: '-200%',
+    opacity: 0,
   },
   visible: {
     y: 0,
+    opacity: 1,
   },
 };
 
 export const Container = styled(motion.div)`
   padding: 2rem;
-  width: 70%;
-  min-height: 20rem;
+  min-width: 30rem;
+  max-width: 70%;
+  min-height: 15rem;
   border-radius: 10px;
   background-color: ${Color.gray};
   color: #000;
@@ -24,7 +27,6 @@ export const Container = styled(motion.div)`
   font-weight: 700;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   justify-content: space-between;
   hyphens: auto;
 `;
@@ -38,6 +40,6 @@ export const StyledButton = styled(Button)`
 
   &:focus {
     box-shadow: 0 0 3px 3px #fff;
-    transform: scale(1.025);
+    transform: scale(1.1);
   }
 `;

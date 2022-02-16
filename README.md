@@ -24,7 +24,7 @@ Global styles, Redux `store` and `BrowserRouter` are added in this file, and the
 
 ### `App.tsx`
 
-The `App` component configures the structure of the router.
+The `App` component configures the structure of the router and shows the modal by the redux state.
 
 ### `githubApi.tsx`
 
@@ -32,15 +32,9 @@ This file contains all apis to fetch data from github, including:
 - Fetch the list of repositories.
 - Search the users that best match the search term.
 
-### `store.tsx`
-
-This file configures the Redux store and exports the custom dispatch and selector hooks.
-
 ### `styles`
 
-This folder contains the global style and the styles that each component may need, including:
-- Colors
-- Breakpoints
+This folder contains the global style and the styles that each component may need, including colors and breakpoints.
 
 ### `pages`
 
@@ -52,19 +46,19 @@ In this page, user can type an username to search the repositories. When form is
 
 #### `Repos`
 
-When users scrolls down to the bottom of this page, this page will fethc the next 10 repositories to the redux store.
+When users scrolls down to the bottom of this page, this page will feth the next 10 repositories to the redux store.
 
 #### `Repo`
 
-Use RTK query to chech fetched data for 5 minutes such that this page will not make a request with the same username and reponame.
+Use RTK query to cache fetched data for 5 minutes such that this page will not make a request with the same username and reponame.
 
 ### `components`
 
 This folder contains all components each page may need.
 
-### `slices`
+### `redux`
 
-This folder contains the slices of Redux.
+This folder contains the redux slices, RTK query api and store configuration.
 
 ### `types`
 

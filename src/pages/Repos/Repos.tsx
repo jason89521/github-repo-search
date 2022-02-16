@@ -16,7 +16,6 @@ const Repos = () => {
   const { username = '' } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
   const { data: reposList, page } = useAppSelector(state => state.reposList);
   const dispatch = useAppDispatch();
 
@@ -36,6 +35,7 @@ const Repos = () => {
     } finally {
       setIsLoading(false);
     }
+
     dispatch(appendNext(response.data));
     setHasMore(response.data.length > 0);
   };

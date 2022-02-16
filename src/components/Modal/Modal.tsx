@@ -6,7 +6,7 @@ import { containerVariants, Container } from './Modal.style';
 
 interface ModalProps {
   show: boolean;
-  children: React.ReactNode[] | React.ReactNode;
+  children: React.ReactNode;
 }
 
 const modalRoot = document.getElementById('modal-root') as HTMLDivElement;

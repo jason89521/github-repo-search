@@ -15,6 +15,7 @@ interface FormProps {
 const Form = ({ isSubmitting, onFormSubmit, onDebounced }: FormProps) => {
   const [username, setUsername] = useState('');
   const [recommendList, setRecommendList] = useState<string[]>([]);
+  // this hook return debounced value when the value didn't change for 500 ms
   const debouncedUsername = useDebounced(username, 500);
 
   const handleSubmit: React.FormEventHandler = e => {
@@ -33,8 +34,7 @@ const Form = ({ isSubmitting, onFormSubmit, onDebounced }: FormProps) => {
   useEffect(() => {
     if (!/\S/.test(debouncedUsername)) return;
 
-    // Use this value to prevent setting state after unmounted
-    let cancel = false;
+    let cancel = false; // Use this value to prevent setting state after unmounted
     const search = async () => {
       const data = await onDebounced(debouncedUsername);
       if (cancel) return;

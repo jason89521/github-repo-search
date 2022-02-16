@@ -37,6 +37,8 @@ const Repo = () => {
     dispatch(setMessage('Unexpected error'));
   }, [dispatch, repoError, filesError]);
 
+  // if the repo have not been fetched yet, show the skeleton
+  // such that the animation can be displayed
   if (!repo) {
     return (
       <Container>

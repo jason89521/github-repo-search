@@ -5,7 +5,7 @@ interface InfiniteScrollProps {
   className?: string;
   hasMore: boolean;
   isLoading: boolean;
-  children: React.ReactNode[] | React.ReactNode;
+  children: React.ReactNode;
   loader?: React.ReactNode;
   next: () => any;
 }
@@ -18,6 +18,8 @@ const InfiniteScroll = ({
   loader,
   next,
 }: InfiniteScrollProps) => {
+  // this hook returns an boolean and a ref to indicate
+  // whether the ref intersects with the viewport
   const [isBottom, lastRef] = useIntersection();
 
   useEffect(() => {

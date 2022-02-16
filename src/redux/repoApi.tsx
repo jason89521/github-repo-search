@@ -1,9 +1,4 @@
-import {
-  BaseQueryFn,
-  createApi,
-  FetchArgs,
-  fetchBaseQuery,
-} from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import RepoInfo from 'types/RepoInfo';
 import FileInfo from 'types/FileInfo';
@@ -15,9 +10,9 @@ interface CustomError {
   };
 }
 const customBaseQuery = fetchBaseQuery({ baseUrl: 'https://api.github.com/' }) as BaseQueryFn<
-string | FetchArgs,
-unknown,
-CustomError
+  string | FetchArgs,
+  unknown,
+  CustomError
 >;
 const cachedDuration = 300; // 5 minutes
 

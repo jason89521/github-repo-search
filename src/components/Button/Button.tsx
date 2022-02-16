@@ -4,7 +4,7 @@ import { Container } from './Button.style';
 
 interface ButtonProps {
   className?: string;
-  children: React.ReactNode[] | React.ReactNode;
+  children: React.ReactNode;
   onClick?: React.MouseEventHandler;
 }
 

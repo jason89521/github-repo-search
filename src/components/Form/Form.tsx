@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useDebounced } from '@yuxuan-zheng/hooks';
 
-import { searchUser } from 'githubApi';
 import { Container } from './Form.style';
 import Button from 'components/Button';
 import SearchField from 'components/SearchField';
 
 interface FormProps {
   isSubmitting: boolean;
+  recommendList: string[];
   onFormSubmit: (username: string) => void;
+  onDebounced: (debounced: string) => Promise<string[]>;
 }
 
-const Form = ({ isSubmitting, onFormSubmit }: FormProps) => {
+const Form = ({ isSubmitting, onFormSubmit, onDebounced }: FormProps) => {
   const [username, setUsername] = useState('');
   const [recommendList, setRecommendList] = useState<string[]>([]);
   const debouncedUsername = useDebounced(username, 500);
@@ -23,7 +24,7 @@ const Form = ({ isSubmitting, onFormSubmit }: FormProps) => {
     onFormSubmit(username);
   };
 
-  const onClickItem = (value: string) => {
+  const handleClickItem = (value: string) => {
     if (isSubmitting) return;
 
     onFormSubmit(value);
@@ -35,10 +36,10 @@ const Form = ({ isSubmitting, onFormSubmit }: FormProps) => {
     // Use this value to prevent setting state after unmounted
     let cancel = false;
     const search = async () => {
-      const res = await searchUser(debouncedUsername);
+      const data = await onDebounced(debouncedUsername);
       if (cancel) return;
 
-      setRecommendList(res.data.items.map((item: { login: string }) => item.login));
+      setRecommendList(data);
     };
 
     search();
@@ -46,7 +47,7 @@ const Form = ({ isSubmitting, onFormSubmit }: FormProps) => {
     return () => {
       cancel = true;
     };
-  }, [debouncedUsername]);
+  }, [debouncedUsername, onDebounced]);
 
   return (
     <Container onSubmit={handleSubmit}>
@@ -55,7 +56,7 @@ const Form = ({ isSubmitting, onFormSubmit }: FormProps) => {
         defaultString="No recommendation"
         disabled={isSubmitting}
         onChange={value => setUsername(value)}
-        onClickItem={onClickItem}
+        onClickItem={handleClickItem}
       />
       <Button>Search</Button>
     </Container>

@@ -6,7 +6,7 @@ import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch } from 'redux/store';
 import { reset } from 'redux/repoListSlice';
 import { show, setMessage } from 'redux/modalSlice';
-import { fetchRepos } from 'githubApi';
+import { fetchRepos, searchUser } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
 
@@ -14,6 +14,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const appDispatch = useAppDispatch();
+
   const onFormSubmit = useCallback(
     async (username: string) => {
       setIsSubmitting(true);
@@ -21,12 +22,12 @@ const Home = () => {
       try {
         response = await fetchRepos(username);
       } catch (error) {
+        appDispatch(show());
         if (axios.isAxiosError(error)) {
-          appDispatch(show());
-          if (error.response?.status === 403) appDispatch(setMessage('API rate limit exceeded'));
-          else if (error.response?.status === 404) appDispatch(setMessage('User not found'));
-          else appDispatch(setMessage('Unexpected error'));
+          appDispatch(setMessage(error.response?.data.message));
+          return;
         }
+        appDispatch(setMessage('Unexpected error'));
         return;
       } finally {
         setIsSubmitting(false);
@@ -37,6 +38,15 @@ const Home = () => {
     },
     [appDispatch, navigate]
   );
+  
+  const handleDebounced = useCallback(async (debounced: string) => {
+    try {
+      const res = await searchUser(debounced);
+      return res.data.items.map(item => item.login);
+    } catch (error) {
+      return [];
+    }
+  }, []);
 
   return (
     <Container>
@@ -45,7 +55,12 @@ const Home = () => {
         <h1>Github Repositories</h1>
       </Header>
 
-      <Form isSubmitting={isSubmitting} onFormSubmit={onFormSubmit} />
+      <Form
+        isSubmitting={isSubmitting}
+        recommendList={[]}
+        onFormSubmit={onFormSubmit}
+        onDebounced={handleDebounced}
+      />
     </Container>
   );
 };

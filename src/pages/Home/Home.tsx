@@ -3,8 +3,9 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch } from 'redux/store';
+import { useAppDispatch, useAppSelector } from 'redux/store';
 import { reset } from 'redux/repoListSlice';
+import { show, hide, setMessage } from 'redux/modalSlice';
 import { fetchRepos } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
@@ -13,10 +14,9 @@ import Dialog from 'components/Dialog';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const appDispatch = useAppDispatch();
+  const modal = useAppSelector(state => state.modal);
   const onFormSubmit = useCallback(
     async (username: string) => {
       setIsSubmitting(true);
@@ -25,8 +25,10 @@ const Home = () => {
         response = await fetchRepos(username);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setShowModal(true);
-          setErrorMsg(error.response?.data.message);
+          appDispatch(show());
+          if (error.response?.status === 403) appDispatch(setMessage('API rate limit exceeded'));
+          else if (error.response?.status === 404) appDispatch(setMessage('User not found'));
+          else appDispatch(setMessage('Unexpected error'));
         }
         return;
       } finally {
@@ -41,8 +43,8 @@ const Home = () => {
 
   return (
     <>
-      <Modal show={showModal}>
-        <Dialog onClick={() => setShowModal(false)} message={errorMsg} />
+      <Modal show={modal.show}>
+        <Dialog onClick={() => appDispatch(hide())} message={modal.message} />
       </Modal>
       <Container>
         <Header>

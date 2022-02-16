@@ -27,5 +27,4 @@ const reposListSlice = createSlice({
 });
 
 export default reposListSlice;
-
 export const { reset, appendNext } = reposListSlice.actions;

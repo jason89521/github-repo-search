@@ -37,7 +37,7 @@ export const StyledButton = styled(Button)`
   }
 
   &:focus {
-    outline: 3px solid #fff;
+    box-shadow: 0 0 3px 3px #fff;
     transform: scale(1.1);
   }
 `;

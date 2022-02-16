@@ -20,13 +20,13 @@ export const Container = styled(motion.div)`
   border-radius: 10px;
   background-color: ${Color.gray};
   color: #000;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  hyphens: auto;
 `;
 
 export const StyledButton = styled(Button)`
@@ -38,6 +38,6 @@ export const StyledButton = styled(Button)`
 
   &:focus {
     box-shadow: 0 0 3px 3px #fff;
-    transform: scale(1.1);
+    transform: scale(1.025);
   }
 `;

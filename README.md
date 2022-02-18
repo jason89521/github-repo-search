@@ -40,7 +40,9 @@ This folder contains the global style and the styles that each component may nee
 
 ### `pages`
 
-There are three pages in this app, `Home`, `Repos` and `Repo`. This folder contains these page components.
+#### `Base`
+
+The layout of this app.
 
 #### `Home`
 

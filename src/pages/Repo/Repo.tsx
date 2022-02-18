@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch } from 'redux/store';
 import { show, setMessage } from 'redux/modalSlice';
 import { useGetRepoQuery, useGetFilesQuery } from 'redux/repoApi';
 import { Container, Heading, IconsBox } from './Repo.style';
+import BackPage from 'components/BackPage';
 import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
 import Skeleton from 'components/Skeleton';
 
 const Repo = () => {
   const params = useParams() as { username: string; repo: string };
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: repo, error: repoError } = useGetRepoQuery({
     username: params.username,
@@ -41,18 +43,20 @@ const Repo = () => {
   // such that the animation can be displayed
   if (!repo) {
     return (
-      <Container>
-        <Skeleton height="5rem" />
-        <Skeleton height="3rem" />
-        <IconsBox>
-          <Skeleton width="3rem" height="1.5rem" />
-          <Skeleton width="3rem" height="1.5rem" />
-          <Skeleton width="3rem" height="1.5rem" />
-        </IconsBox>
-        <Skeleton height="2rem" />
-        <Skeleton height="2rem" />
-        <Skeleton height="2rem" />
-      </Container>
+      <BackPage onClickBack={() => navigate('../')}>
+        <Container>
+          <Skeleton height="5rem" />
+          <Skeleton height="3rem" />
+          <IconsBox>
+            <Skeleton width="3rem" height="1.5rem" />
+            <Skeleton width="3rem" height="1.5rem" />
+            <Skeleton width="3rem" height="1.5rem" />
+          </IconsBox>
+          <Skeleton height="2rem" />
+          <Skeleton height="2rem" />
+          <Skeleton height="2rem" />
+        </Container>
+      </BackPage>
     );
   }
 
@@ -60,20 +64,22 @@ const Repo = () => {
     repo;
 
   return (
-    <Container>
-      <Heading>
-        <a href={html_url} target="_blank" rel="noreferrer">
-          {full_name}
-        </a>
-      </Heading>
-      <p>{description}</p>
-      <IconsBox>
-        <Icon href="icon-star" message={stargazers_count} />
-        <Icon href="icon-fork" message={forks_count} />
-        <Icon href="icon-issue" message={open_issues_count} />
-      </IconsBox>
-      <FilesList files={files} />
-    </Container>
+    <BackPage onClickBack={() => navigate('../')}>
+      <Container>
+        <Heading>
+          <a href={html_url} target="_blank" rel="noreferrer">
+            {full_name}
+          </a>
+        </Heading>
+        <p>{description}</p>
+        <IconsBox>
+          <Icon href="icon-star" message={stargazers_count} />
+          <Icon href="icon-fork" message={forks_count} />
+          <Icon href="icon-issue" message={open_issues_count} />
+        </IconsBox>
+        <FilesList files={files} />
+      </Container>
+    </BackPage>
   );
 };
 

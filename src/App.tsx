@@ -3,11 +3,10 @@ import { AnimatePresence } from 'framer-motion';
 
 import { useAppSelector, useAppDispatch } from 'redux/store';
 import { hide } from 'redux/modalSlice';
+import Base from 'pages/Base';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
-import OuterLayout from 'pages/Base';
-import InnerLayout from 'components/InnerLayout';
 import Modal from 'components/Modal';
 import Dialog from 'components/Dialog';
 
@@ -23,9 +22,9 @@ const App = () => {
       </Modal>
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.key}>
-          <Route path="/" element={<OuterLayout />}>
+          <Route path="/" element={<Base />}>
             <Route index element={<Home />} />
-            <Route path="users/:username/repos" element={<InnerLayout />}>
+            <Route path="users/:username/repos">
               <Route index element={<Repos />} />
               <Route path=":repo" element={<Repo />} />
             </Route>

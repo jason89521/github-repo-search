@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import InfiniteScroll from '@yuxuan-zheng/react-infinite-scroll';
 import axios from 'axios';
 
@@ -9,11 +9,13 @@ import { appendNext } from 'redux/repoListSlice';
 import { show, setMessage } from 'redux/modalSlice';
 import { fetchRepos } from 'githubApi';
 import { Heading, List, LoaderBox } from './Repos.style';
+import BackPage from 'components/BackPage';
 import RepoItem from 'components/RepoItem';
 import Loader from 'components/Loader';
 
 const Repos = () => {
   const { username = '' } = useParams();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const { data: reposList, page } = useAppSelector(state => state.reposList);
@@ -60,7 +62,11 @@ const Repos = () => {
   });
 
   return (
-    <>
+    <BackPage
+      onClickBack={() => {
+        navigate('/');
+      }}
+    >
       <Heading>{username}</Heading>
 
       <List>
@@ -77,7 +83,7 @@ const Repos = () => {
           </LoaderBox>
         )}
       </List>
-    </>
+    </BackPage>
   );
 };
 

@@ -50,8 +50,13 @@ const Repos = () => {
     setHasMore(response.data.length === 10);
   };
 
-  const itemsProps = reposList.map(repo => {
-    return { repo };
+  const itemData = reposList.map(repo => {
+    return {
+      key: repo.id.toString(10),
+      props: {
+        repo,
+      },
+    };
   });
 
   return (
@@ -63,7 +68,7 @@ const Repos = () => {
           isLoading={isLoading}
           hasMore={hasMore}
           Item={RepoItem}
-          itemsProps={itemsProps}
+          itemData={itemData}
           next={fetchNext}
         />
         {isLoading && (

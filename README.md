@@ -74,4 +74,5 @@ Define types that may be used in other files.
 - [styled-components](https://github.com/styled-components/styled-components)
 - [axios](https://github.com/axios/axios)
 - [framer motion](https://github.com/framer/motion)
-- [yuxuan-zheng/hooks](https://github.com/jason89521/hooks)
+- [@yuxuan-zheng/hooks](https://github.com/jason89521/hooks)
+- [@yuxuan-zheng/react-infinite-scroll](https://github.com/jason89521/react-infinte-scroll)

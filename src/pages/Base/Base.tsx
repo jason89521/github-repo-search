@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 
-import { Container, Panel } from './OuterLayout.style';
+import { Container, Panel } from './Base.style';
 
-const OuterLayout = () => {
+const Base = () => {
   return (
     <Container>
       <Panel>
@@ -12,4 +12,4 @@ const OuterLayout = () => {
   );
 };
 
-export default OuterLayout;
+export default Base;

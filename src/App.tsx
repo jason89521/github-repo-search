@@ -6,7 +6,7 @@ import { hide } from 'redux/modalSlice';
 import Home from 'pages/Home';
 import Repos from 'pages/Repos';
 import Repo from 'pages/Repo';
-import OuterLayout from 'components/OuterLayout';
+import OuterLayout from 'pages/Base';
 import InnerLayout from 'components/InnerLayout';
 import Modal from 'components/Modal';
 import Dialog from 'components/Dialog';

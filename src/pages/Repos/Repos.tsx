@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import InfiniteScroll from '@yuxuan-zheng/react-infinite-scroll';
+import axios from 'axios';
 
 import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch, useAppSelector } from 'redux/store';
@@ -10,7 +11,6 @@ import { fetchRepos } from 'githubApi';
 import { Heading, List, LoaderBox } from './Repos.style';
 import RepoItem from 'components/RepoItem';
 import Loader from 'components/Loader';
-import axios from 'axios';
 
 const Repos = () => {
   const { username = '' } = useParams();

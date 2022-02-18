@@ -57,7 +57,6 @@ const Home = () => {
 
       <Form
         isSubmitting={isSubmitting}
-        recommendList={[]}
         onFormSubmit={onFormSubmit}
         onDebounced={handleDebounced}
       />

@@ -7,7 +7,6 @@ import SearchField from 'components/SearchField';
 
 interface FormProps {
   isSubmitting: boolean;
-  recommendList: string[];
   onFormSubmit: (username: string) => void;
   onDebounced: (debounced: string) => Promise<string[]>;
 }
@@ -43,7 +42,6 @@ const Form = ({ isSubmitting, onFormSubmit, onDebounced }: FormProps) => {
     };
 
     search();
-
     return () => {
       cancel = true;
     };

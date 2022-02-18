@@ -20,6 +20,7 @@ const Repos = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // Only execute when this page is opened directly by typing url
     if (reposList.length === 0) {
       fetchNext();
     }
@@ -44,6 +45,8 @@ const Repos = () => {
     }
 
     dispatch(appendNext(response.data));
+    // Since we fetch 10 repos every time we call the api,
+    // we know that there is no more repos if the response data is less than 10
     setHasMore(response.data.length === 10);
   };
 

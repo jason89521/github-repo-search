@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import InfiniteScroll from '@yuxuan-zheng/react-infinite-scroll';
 
 import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch, useAppSelector } from 'redux/store';
@@ -8,7 +9,6 @@ import { show, setMessage } from 'redux/modalSlice';
 import { fetchRepos } from 'githubApi';
 import { Heading, List, LoaderBox } from './Repos.style';
 import RepoItem from 'components/RepoItem';
-import InfiniteScroll from 'components/InfiniteScroll';
 import Loader from 'components/Loader';
 import axios from 'axios';
 
@@ -18,6 +18,14 @@ const Repos = () => {
   const [hasMore, setHasMore] = useState(true);
   const { data: reposList, page } = useAppSelector(state => state.reposList);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Only execute when this page is opened directly by typing url
+    if (reposList.length === 0) {
+      fetchNext();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchNext = async () => {
     setIsLoading(true);
@@ -37,29 +45,33 @@ const Repos = () => {
     }
 
     dispatch(appendNext(response.data));
-    setHasMore(response.data.length > 0);
+    // Since we fetch 10 repos every time we call the api,
+    // we know that there is no more repos if the response data is less than 10
+    setHasMore(response.data.length === 10);
   };
 
-  const renderedRepos = reposList.map(repo => {
-    return <RepoItem key={repo.id} repo={repo} />;
+  const itemsProps = reposList.map(repo => {
+    return { repo };
   });
 
   return (
     <>
       <Heading>{username}</Heading>
 
-      <InfiniteScroll
-        next={fetchNext}
-        hasMore={hasMore}
-        isLoading={isLoading}
-        loader={
+      <List>
+        <InfiniteScroll
+          isLoading={isLoading}
+          hasMore={hasMore}
+          Item={RepoItem}
+          itemsProps={itemsProps}
+          next={fetchNext}
+        />
+        {isLoading && (
           <LoaderBox>
             <Loader />
           </LoaderBox>
-        }
-      >
-        <List>{renderedRepos}</List>
-      </InfiniteScroll>
+        )}
+      </List>
     </>
   );
 };

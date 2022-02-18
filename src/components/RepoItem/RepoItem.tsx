@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 import RepoInfo from 'types/RepoInfo';
 import { Item, Infos, Language, LanguageType } from './RepoItem.style';
 import Icon from 'components/Icon';
+import React from 'react';
 
 interface RepoItemProps {
   repo: RepoInfo;
 }
 
-const RepoItem = ({ repo }: RepoItemProps) => {
+const RepoItem = ({ repo }: RepoItemProps, ref: React.ForwardedRef<HTMLLIElement>) => {
   const { name, description, language, stargazers_count, forks_count, open_issues_count } = repo;
 
   return (
-    <Item>
+    <Item ref={ref}>
       <h2>
         <Link to={name}>{name}</Link>
       </h2>
@@ -27,4 +28,4 @@ const RepoItem = ({ repo }: RepoItemProps) => {
   );
 };
 
-export default RepoItem;
+export default React.forwardRef(RepoItem);

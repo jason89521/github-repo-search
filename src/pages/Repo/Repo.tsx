@@ -12,17 +12,11 @@ import Icon from 'components/Icon';
 import Skeleton from 'components/Skeleton';
 
 const Repo = () => {
-  const params = useParams() as { username: string; repo: string };
+  const { username, repo } = useParams() as { username: string; repo: string };
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data: repo, error: repoError } = useGetRepoQuery({
-    username: params.username,
-    repo: params.repo,
-  });
-  const { data: files = [], error: filesError } = useGetFilesQuery({
-    username: params.username,
-    repo: params.repo,
-  });
+  const { data: repoInfo, error: repoError } = useGetRepoQuery({ username, repo });
+  const { data: files = [], error: filesError } = useGetFilesQuery({ username, repo });
 
   useEffect(() => {
     if (!repoError && !filesError) return;
@@ -41,7 +35,7 @@ const Repo = () => {
 
   // if the repo have not been fetched yet, show the skeleton
   // such that the animation can be displayed
-  if (!repo) {
+  if (!repoInfo) {
     return (
       <BackPage onClickBack={() => navigate('../')}>
         <Container>
@@ -61,7 +55,7 @@ const Repo = () => {
   }
 
   const { full_name, description, html_url, stargazers_count, forks_count, open_issues_count } =
-    repo;
+    repoInfo;
 
   return (
     <BackPage onClickBack={() => navigate('../')}>

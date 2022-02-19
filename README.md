@@ -11,6 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1. clone this project
 2. Run the following command:
     ```bash
+    yarn
     yarn start
     ```
 

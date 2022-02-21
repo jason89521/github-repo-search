@@ -2185,9 +2185,9 @@
   integrity sha512-cGibrrUO/7t52gF7xedfgkx9rL4q2VNWRgm5Xx0E41PpQPmzIbgYaY9yXITQeIAy3x4CYBbzTByadagbaIUSMA==
 
 "@yuxuan-zheng/react-infinite-scroll@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@yuxuan-zheng/react-infinite-scroll/-/react-infinite-scroll-1.0.0.tgz#cdbb403acabcc9f0ce07ef58836de3db809a2a7a"
-  integrity sha512-oaL+X0YnT/q+I40cpe+O6teX4BOx4QgNGGXtSFKj7YHFEDSY+YKD7x3ATtxk35umJ6+2N7I9TLuE0bOC7GsAgg==
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@yuxuan-zheng/react-infinite-scroll/-/react-infinite-scroll-1.0.5.tgz#ce5e7fa877298ac807f4435c1201c16381e5e2e5"
+  integrity sha512-sTfm0uEsOrrTxn2n6ZLMQV4gjjAdFKBCFknv6uNInSiyGgL+2hx4NpOGorIu2rgVn47ckpRjepfI9hVSazH66A==
 
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"

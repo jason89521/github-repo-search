@@ -54,7 +54,7 @@ const Repos = () => {
 
   const itemData = reposList.map(repo => {
     return {
-      key: repo.id.toString(10),
+      key: repo.id,
       props: {
         repo,
       },

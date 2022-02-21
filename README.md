@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## [Live Demo](https://dcard-homework.vercel.app/)
+## [Live Demo](https://xuan-github-repo-search.vercel.app/)
 
 ![](demo.gif)
 

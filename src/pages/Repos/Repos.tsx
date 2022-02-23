@@ -76,6 +76,7 @@ const Repos = () => {
           Item={RepoItem}
           itemData={itemData}
           next={fetchNext}
+          threshold={1}
         />
         {isLoading && (
           <LoaderBox>

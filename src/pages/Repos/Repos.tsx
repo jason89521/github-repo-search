@@ -52,15 +52,6 @@ const Repos = () => {
     setHasMore(response.data.length === 10);
   };
 
-  const itemData = reposList.map(repo => {
-    return {
-      key: repo.id,
-      props: {
-        repo,
-      },
-    };
-  });
-
   return (
     <BackPage
       onClickBack={() => {
@@ -70,14 +61,11 @@ const Repos = () => {
       <Heading>{username}</Heading>
 
       <List>
-        <InfiniteScroll
-          isLoading={isLoading}
-          hasMore={hasMore}
-          Item={RepoItem}
-          itemData={itemData}
-          next={fetchNext}
-          threshold={1}
-        />
+        <InfiniteScroll isLoading={isLoading} hasMore={hasMore} next={fetchNext} threshold={1}>
+          {reposList.map(repo => {
+            return <RepoItem key={repo.id} repo={repo} />;
+          })}
+        </InfiniteScroll>
         {isLoading && (
           <LoaderBox>
             <Loader />

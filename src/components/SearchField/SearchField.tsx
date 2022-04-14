@@ -1,15 +1,7 @@
 import { useState } from 'react';
 import Color from 'styles/color';
 
-import {
-  conainerVariants,
-  inputVariants,
-  listVariants,
-  Container,
-  Input,
-  List,
-  Item,
-} from './SearchField.style';
+import { conainerVariants, inputVariants, listVariants, Container, Input, List, Item } from './SearchField.style';
 
 interface SearchFieldProps {
   defaultString: string;
@@ -19,13 +11,7 @@ interface SearchFieldProps {
   onClickItem: (value: string) => void;
 }
 
-const SearchField = ({
-  defaultString,
-  data,
-  disabled,
-  onChange,
-  onClickItem,
-}: SearchFieldProps) => {
+const SearchField = ({ defaultString, data, disabled, onChange, onClickItem }: SearchFieldProps) => {
   const [isFocus, setIsfocus] = useState(false);
   const [value, setValue] = useState('');
 
@@ -53,6 +39,7 @@ const SearchField = ({
   return (
     <Container initial="blur" animate={animate} variants={conainerVariants}>
       <Input
+        required
         disabled={disabled}
         placeholder="Enter an username"
         value={value}

@@ -3,8 +3,6 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch } from 'redux/store';
-import { reset } from 'redux/repoListSlice';
 import { fetchRepos, searchUser } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
@@ -15,14 +13,12 @@ const Home = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalShow, setIsModalShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const dispatch = useAppDispatch();
 
   const onFormSubmit = useCallback(
     async (username: string) => {
       setIsSubmitting(true);
-      let response;
       try {
-        response = await fetchRepos(username);
+        const response = await fetchRepos(username);
       } catch (error) {
         setIsModalShow(true);
         if (axios.isAxiosError(error)) {
@@ -35,10 +31,9 @@ const Home = () => {
         setIsSubmitting(false);
       }
 
-      dispatch(reset(response.data));
       navigate(`users/${username}/repos`);
     },
-    [dispatch, navigate]
+    [navigate]
   );
 
   const handleDebounced = useCallback(async (debounced: string) => {

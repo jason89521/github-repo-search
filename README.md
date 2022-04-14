@@ -96,5 +96,5 @@ Global styles, Redux `store` and `BrowserRouter` are added in this file, and the
 
 ## Improvements
 
-- [ ] click outside of th dialog will close the modal
+- [x] click outside of th dialog will close the modal
 - [ ] convert redux to context and swr

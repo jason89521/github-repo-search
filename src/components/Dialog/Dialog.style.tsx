@@ -19,7 +19,7 @@ export const Container = styled(motion.div)`
   padding: 2rem;
   min-width: 30rem;
   max-width: 70%;
-  min-height: 15rem;
+  min-height: 17.5rem;
   border-radius: 10px;
   background-color: ${Color.gray};
   color: #000;
@@ -33,6 +33,7 @@ export const Container = styled(motion.div)`
 
 export const StyledButton = styled(Button)`
   background-color: #ff4757;
+  align-self: center;
 
   &:hover {
     background-color: #ff6b81;

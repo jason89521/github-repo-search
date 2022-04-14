@@ -1,40 +1,40 @@
-import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSWR from 'swr';
 
 import withAnimation from 'hocs/withAnimation';
-import { fetchRepos, searchUser } from 'githubApi';
+import { searchUser } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
 import Modal from 'components/Modal';
+import createFetcher from 'lib/createFetcher';
+import swrConfig from 'lib/swrConfig';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalShow, setIsModalShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { data, error } = useSWR(username === '' ? null : `users/${username}/repos`, createFetcher(), swrConfig);
 
-  const onFormSubmit = useCallback(
-    async (username: string) => {
-      setIsSubmitting(true);
-      try {
-        await fetchRepos(username);
-      } catch (error) {
-        setIsModalShow(true);
-        if (axios.isAxiosError(error)) {
-          setErrorMessage(error.response?.data.message);
-          return;
-        }
-        setErrorMessage('Unexpected error');
-        return;
-      } finally {
-        setIsSubmitting(false);
-      }
+  useEffect(() => {
+    if (!data) return;
+    navigate(`users/${username}/repos`);
+  }, [data, navigate, username]);
 
-      navigate(`users/${username}/repos`);
-    },
-    [navigate]
-  );
+  useEffect(() => {
+    if (!error) return;
+
+    setIsModalShow(true);
+    setErrorMessage(error.message);
+    setIsSubmitting(false);
+  }, [error]);
+
+  const onFormSubmit = useCallback((username: string) => {
+    setIsSubmitting(true);
+    setUsername(username);
+  }, []);
 
   const handleDebounced = useCallback(async (debounced: string) => {
     try {

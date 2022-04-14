@@ -5,14 +5,13 @@ import useSWRInfinite from 'swr/infinite';
 
 import type RepoInfo from 'types/RepoInfo';
 import withAnimation from 'hocs/withAnimation';
-import fetcher from 'lib/fetcher';
+import createFetcher from 'lib/createFetcher';
 import swrConfig from 'lib/swrConfig';
 import { Heading, List, LoaderBox } from './Repos.style';
 import BackPage from 'components/BackPage';
 import RepoItem from 'components/RepoItem';
 import Loader from 'components/Loader';
 import Modal from 'components/Modal';
-import githubDomain from 'lib/githubDomain';
 
 const PAGE_SIZE = 10;
 
@@ -24,11 +23,17 @@ const Repos = () => {
   const getKey = useCallback(
     (pageIndex: number, previousPage: RepoInfo[]) => {
       if (previousPage && previousPage.length < 10) return null;
-      return `${githubDomain}users/${username}/repos?per_page=${PAGE_SIZE}&page=${pageIndex + 1}`;
+      return `users/${username}/repos?page=${pageIndex + 1}`;
     },
     [username]
   );
-  const { data = [], error, isValidating, size, setSize } = useSWRInfinite<RepoInfo[]>(getKey, fetcher, swrConfig);
+  const {
+    data = [],
+    error,
+    isValidating,
+    size,
+    setSize,
+  } = useSWRInfinite<RepoInfo[]>(getKey, createFetcher(), swrConfig);
 
   useEffect(() => {
     if (error) {

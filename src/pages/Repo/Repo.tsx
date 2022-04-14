@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import useSWRImmutable from 'swr/immutable';
 
+import type RepoInfo from 'types/RepoInfo';
+import type FileInfo from 'types/FileInfo';
 import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch } from 'redux/store';
-import { useGetRepoQuery, useGetFilesQuery } from 'redux/repoApi';
 import { Container, Heading, IconsBox } from './Repo.style';
 import BackPage from 'components/BackPage';
 import FilesList from 'components/FileList';
@@ -11,14 +12,23 @@ import Icon from 'components/Icon';
 import Skeleton from 'components/Skeleton';
 import Modal from 'components/Modal';
 
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+const swrConfig = {
+  dedupingInterval: 100000, // 100 seconds
+};
+
 const Repo = () => {
   const { username, repo } = useParams() as { username: string; repo: string };
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [isModalShow, setIsModalShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { data: repoInfo, error: repoError } = useGetRepoQuery({ username, repo });
-  const { data: files = [], error: filesError } = useGetFilesQuery({ username, repo });
+  const repoUrl = `https://api.github.com/repos/${username}/${repo}`;
+  const { data: repoInfo, error: repoError } = useSWRImmutable<RepoInfo>(repoUrl, fetcher, swrConfig);
+  const { data: files = [], error: filesError } = useSWRImmutable<FileInfo[]>(
+    `${repoUrl}/contents`,
+    fetcher,
+    swrConfig
+  );
 
   useEffect(() => {
     if (!repoError && !filesError) return;
@@ -32,7 +42,7 @@ const Repo = () => {
       return;
     }
     setErrorMessage('Unexpected error');
-  }, [dispatch, repoError, filesError]);
+  }, [repoError, filesError]);
 
   // if the repo have not been fetched yet, show the skeleton
   // such that the animation can be displayed

@@ -10,8 +10,6 @@ interface ModalProps {
   closeModal: () => void;
 }
 
-const ModalContext = React.createContext({ closeModal: () => {} });
-
 const Modal = ({ show, message, closeModal }: ModalProps) => {
   const elRef = useRef(document.createElement('div'));
 
@@ -26,30 +24,27 @@ const Modal = ({ show, message, closeModal }: ModalProps) => {
   }, []);
 
   const renderedContent = (
-    <ModalContext.Provider value={{ closeModal }}>
-      <AnimatePresence>
-        {show ? (
-          <Container
-            key="modal"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            onClick={closeModal}
-          >
-            <Dialog variants={dialogVariants} onClick={e => e.stopPropagation()}>
-              {message}
-              <CloseButton ref={el => el?.focus()} onClick={closeModal}>
-                OK
-              </CloseButton>
-            </Dialog>
-          </Container>
-        ) : null}
-      </AnimatePresence>
-    </ModalContext.Provider>
+    <AnimatePresence>
+      {show ? (
+        <Container
+          key="modal"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          onClick={closeModal}
+        >
+          <Dialog variants={dialogVariants} onClick={e => e.stopPropagation()}>
+            {message}
+            <CloseButton ref={el => el?.focus()} onClick={closeModal}>
+              OK
+            </CloseButton>
+          </Dialog>
+        </Container>
+      ) : null}
+    </AnimatePresence>
   );
   return ReactDOM.createPortal(renderedContent, elRef.current);
 };
 
 export default Modal;
-export { ModalContext };

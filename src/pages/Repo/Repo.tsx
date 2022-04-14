@@ -6,6 +6,7 @@ import type RepoInfo from 'types/RepoInfo';
 import type FileInfo from 'types/FileInfo';
 import withAnimation from 'hocs/withAnimation';
 import fetcher from 'lib/fetcher';
+import githubDomain from 'lib/githubDomain';
 import { Container, Heading, IconsBox } from './Repo.style';
 import BackPage from 'components/BackPage';
 import FilesList from 'components/FileList';
@@ -23,7 +24,7 @@ const Repo = () => {
   const navigate = useNavigate();
   const [isModalShow, setIsModalShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const repoUrl = `https://api.github.com/repos/${username}/${repo}`;
+  const repoUrl = `${githubDomain}${username}/${repo}`;
   const { data: repoInfo, error: repoError } = useSWR<RepoInfo>(repoUrl, fetcher, swrConfig);
   const { data: files = [], error: filesError } = useSWR<FileInfo[]>(`${repoUrl}/contents`, fetcher, swrConfig);
 

@@ -11,6 +11,7 @@ import BackPage from 'components/BackPage';
 import RepoItem from 'components/RepoItem';
 import Loader from 'components/Loader';
 import Modal from 'components/Modal';
+import githubDomain from 'lib/githubDomain';
 
 const swrConfig = {
   dedupingInterval: 100 * 1000, // 100 seconds
@@ -29,7 +30,7 @@ const Repos = () => {
         setHasMore(false);
         return null;
       }
-      return `https://api.github.com/users/${username}/repos?per_page=10&page=${pageIndex + 1}`;
+      return `${githubDomain}users/${username}/repos?per_page=10&page=${pageIndex + 1}`;
     },
     [username]
   );

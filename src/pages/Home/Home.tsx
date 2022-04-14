@@ -14,6 +14,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalShow, setIsModalShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useAppDispatch();
 
   const onFormSubmit = useCallback(
@@ -23,10 +24,12 @@ const Home = () => {
       try {
         response = await fetchRepos(username);
       } catch (error) {
+        setIsModalShow(true);
         if (axios.isAxiosError(error)) {
-          setIsModalShow(true);
+          setErrorMessage(error.response?.data.message);
           return;
         }
+        setErrorMessage('Unexpected error');
         return;
       } finally {
         setIsSubmitting(false);
@@ -49,13 +52,7 @@ const Home = () => {
 
   return (
     <Container>
-      <Modal
-        show={isModalShow}
-        message={'error'}
-        closeModal={() => {
-          setIsModalShow(false);
-        }}
-      />
+      <Modal show={isModalShow} message={errorMessage} closeModal={() => setIsModalShow(false)} />
 
       <Header>
         <StyledSvg href="icon-github"></StyledSvg>

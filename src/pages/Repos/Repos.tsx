@@ -6,18 +6,20 @@ import axios from 'axios';
 import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch, useAppSelector } from 'redux/store';
 import { appendNext } from 'redux/repoListSlice';
-import { show, setMessage } from 'redux/modalSlice';
 import { fetchRepos } from 'githubApi';
 import { Heading, List, LoaderBox } from './Repos.style';
 import BackPage from 'components/BackPage';
 import RepoItem from 'components/RepoItem';
 import Loader from 'components/Loader';
+import Modal from 'components/Modal';
 
 const Repos = () => {
   const { username = '' } = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { data: reposList, page } = useAppSelector(state => state.reposList);
   const dispatch = useAppDispatch();
 
@@ -35,12 +37,12 @@ const Repos = () => {
     try {
       response = await fetchRepos(username, page + 1);
     } catch (error) {
-      dispatch(show());
+      setIsModalShow(true);
       if (axios.isAxiosError(error)) {
-        dispatch(setMessage(error.response?.data.message));
+        setErrorMessage(error.response?.data.message);
         return;
       }
-      dispatch(setMessage('Unexpected error'));
+      setErrorMessage('Unexpected error');
       return;
     } finally {
       setIsLoading(false);
@@ -58,8 +60,8 @@ const Repos = () => {
         navigate('/');
       }}
     >
+      <Modal show={isModalShow} message={errorMessage} closeModal={() => setIsModalShow(false)} />
       <Heading>{username}</Heading>
-
       <List>
         <InfiniteScroll isLoading={isLoading} hasMore={hasMore} next={fetchNext} threshold={1}>
           {reposList.map(repo => {

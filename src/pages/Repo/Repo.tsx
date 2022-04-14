@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import useSWRImmutable from 'swr/immutable';
+import useSWR from 'swr';
 
 import type RepoInfo from 'types/RepoInfo';
 import type FileInfo from 'types/FileInfo';
@@ -14,7 +14,8 @@ import Modal from 'components/Modal';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const swrConfig = {
-  dedupingInterval: 100000, // 100 seconds
+  dedupingInterval: 100 * 1000, // 100 seconds
+  revalidateOnFocus: false,
 };
 
 const Repo = () => {
@@ -23,21 +24,18 @@ const Repo = () => {
   const [isModalShow, setIsModalShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const repoUrl = `https://api.github.com/repos/${username}/${repo}`;
-  const { data: repoInfo, error: repoError } = useSWRImmutable<RepoInfo>(repoUrl, fetcher, swrConfig);
-  const { data: files = [], error: filesError } = useSWRImmutable<FileInfo[]>(
-    `${repoUrl}/contents`,
-    fetcher,
-    swrConfig
-  );
+  const { data: repoInfo, error: repoError } = useSWR<RepoInfo>(repoUrl, fetcher, swrConfig);
+  const { data: files = [], error: filesError } = useSWR<FileInfo[]>(`${repoUrl}/contents`, fetcher, swrConfig);
 
   useEffect(() => {
     if (!repoError && !filesError) return;
 
     setIsModalShow(true);
-    if (repoError && 'status' in repoError) {
+    if (repoError) {
+      setErrorMessage(repoError.data.message);
       return;
     }
-    if (filesError && 'data' in filesError) {
+    if (filesError) {
       setErrorMessage(filesError.data.message);
       return;
     }
@@ -67,20 +65,18 @@ const Repo = () => {
     );
   } else
     renderedContent = (
-      <BackPage onClickBack={() => navigate('../')}>
-        <Container>
-          <Skeleton height="5rem" />
-          <Skeleton height="3rem" />
-          <IconsBox>
-            <Skeleton width="3rem" height="1.5rem" />
-            <Skeleton width="3rem" height="1.5rem" />
-            <Skeleton width="3rem" height="1.5rem" />
-          </IconsBox>
-          <Skeleton height="2rem" />
-          <Skeleton height="2rem" />
-          <Skeleton height="2rem" />
-        </Container>
-      </BackPage>
+      <>
+        <Skeleton height="5rem" />
+        <Skeleton height="3rem" />
+        <IconsBox>
+          <Skeleton width="3rem" height="1.5rem" />
+          <Skeleton width="3rem" height="1.5rem" />
+          <Skeleton width="3rem" height="1.5rem" />
+        </IconsBox>
+        <Skeleton height="2rem" />
+        <Skeleton height="2rem" />
+        <Skeleton height="2rem" />
+      </>
     );
 
   return (

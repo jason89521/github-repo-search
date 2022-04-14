@@ -6,6 +6,7 @@ import useSWRInfinite from 'swr/infinite';
 import type RepoInfo from 'types/RepoInfo';
 import withAnimation from 'hocs/withAnimation';
 import fetcher from 'lib/fetcher';
+import swrConfig from 'lib/swrConfig';
 import { Heading, List, LoaderBox } from './Repos.style';
 import BackPage from 'components/BackPage';
 import RepoItem from 'components/RepoItem';
@@ -13,25 +14,17 @@ import Loader from 'components/Loader';
 import Modal from 'components/Modal';
 import githubDomain from 'lib/githubDomain';
 
-const swrConfig = {
-  dedupingInterval: 100 * 1000, // 100 seconds
-  revalidateOnFocus: false,
-  revalidateFirstPage: false,
-};
+const PAGE_SIZE = 10;
 
 const Repos = () => {
   const { username = '' } = useParams();
   const navigate = useNavigate();
-  const [hasMore, setHasMore] = useState(true);
   const [isModalShow, setIsModalShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const getKey = useCallback(
     (pageIndex: number, previousPage: RepoInfo[]) => {
-      if (previousPage && previousPage.length < 10) {
-        setHasMore(false);
-        return null;
-      }
-      return `${githubDomain}users/${username}/repos?per_page=10&page=${pageIndex + 1}`;
+      if (previousPage && previousPage.length < 10) return null;
+      return `${githubDomain}users/${username}/repos?per_page=${PAGE_SIZE}&page=${pageIndex + 1}`;
     },
     [username]
   );
@@ -45,6 +38,7 @@ const Repos = () => {
   }, [error]);
 
   const repoItems = data.map(page => page.map(repo => <RepoItem key={repo.id} repo={repo} />)).flat();
+  const hasMore = data.length > 0 && data[data.length - 1].length === PAGE_SIZE;
 
   return (
     <BackPage

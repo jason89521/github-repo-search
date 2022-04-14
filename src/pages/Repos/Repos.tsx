@@ -16,6 +16,7 @@ import githubDomain from 'lib/githubDomain';
 const swrConfig = {
   dedupingInterval: 100 * 1000, // 100 seconds
   revalidateOnFocus: false,
+  revalidateFirstPage: false,
 };
 
 const Repos = () => {

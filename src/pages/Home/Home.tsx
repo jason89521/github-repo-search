@@ -18,7 +18,7 @@ const Home = () => {
     async (username: string) => {
       setIsSubmitting(true);
       try {
-        const response = await fetchRepos(username);
+        await fetchRepos(username);
       } catch (error) {
         setIsModalShow(true);
         if (axios.isAxiosError(error)) {

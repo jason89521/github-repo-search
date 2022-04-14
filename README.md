@@ -93,3 +93,8 @@ Global styles, Redux `store` and `BrowserRouter` are added in this file, and the
 - [framer motion](https://github.com/framer/motion)
 - [@yuxuan-zheng/hooks](https://github.com/jason89521/hooks)
 - [@yuxuan-zheng/react-infinite-scroll](https://github.com/jason89521/react-infinite-scroll)
+
+## Improvements
+
+- [ ] click outside of th dialog will close the modal
+- [ ] convert redux to context and swr

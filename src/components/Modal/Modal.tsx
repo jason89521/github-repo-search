@@ -7,14 +7,16 @@ import { containerVariants, Container } from './Modal.style';
 interface ModalProps {
   show: boolean;
   children: React.ReactNode;
+  closeModal: () => void;
 }
 
-const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
+const ModalContext = React.createContext({ closeModal: () => {} });
 
-const Modal = ({ show, children }: ModalProps) => {
+const Modal = ({ show, children, closeModal }: ModalProps) => {
   const elRef = useRef(document.createElement('div'));
 
   useEffect(() => {
+    const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
     const el = elRef.current;
     modalRoot.appendChild(el);
 
@@ -24,21 +26,25 @@ const Modal = ({ show, children }: ModalProps) => {
   }, []);
 
   const renderedContent = (
-    <AnimatePresence>
-      {show ? (
-        <Container
-          key="modal"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-        >
-          {children}
-        </Container>
-      ) : null}
-    </AnimatePresence>
+    <ModalContext.Provider value={{ closeModal }}>
+      <AnimatePresence>
+        {show ? (
+          <Container
+            key="modal"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            onClick={closeModal}
+          >
+            {children}
+          </Container>
+        ) : null}
+      </AnimatePresence>
+    </ModalContext.Provider>
   );
   return ReactDOM.createPortal(renderedContent, elRef.current);
 };
 
 export default Modal;
+export { ModalContext };

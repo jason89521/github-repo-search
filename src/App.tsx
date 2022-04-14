@@ -17,8 +17,8 @@ const App = () => {
 
   return (
     <>
-      <Modal show={modal.show}>
-        <Dialog message={modal.message} onClick={() => dispatch(hide())} />
+      <Modal show={modal.show} closeModal={() => dispatch(hide())}>
+        <Dialog message={modal.message} />
       </Modal>
       <AnimatePresence exitBeforeEnter>
         <Routes location={location} key={location.key}>

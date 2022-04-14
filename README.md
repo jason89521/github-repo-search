@@ -98,4 +98,4 @@ Global styles, Redux `store` and `BrowserRouter` are added in this file, and the
 
 - [x] click outside of th dialog will close the modal
 - [x] do not use redux to handle modal
-- [ ] use swr to replace redux
+- [x] use swr to replace redux

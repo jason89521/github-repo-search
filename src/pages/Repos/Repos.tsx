@@ -42,7 +42,6 @@ const Repos = () => {
     }
   }, [error]);
 
-  const repoItems = data.map(page => page.map(repo => <RepoItem key={repo.id} repo={repo} />)).flat();
   const hasMore = data.length > 0 && data[data.length - 1].length === PAGE_SIZE;
 
   return (
@@ -62,7 +61,7 @@ const Repos = () => {
           }}
           threshold={1}
         >
-          {repoItems}
+          {data.map(page => page.map(repo => <RepoItem key={repo.id} repo={repo} />))}
         </InfiniteScroll>
         {isValidating && (
           <LoaderBox>

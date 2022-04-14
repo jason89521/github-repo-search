@@ -2164,10 +2164,10 @@
   resolved "https://registry.yarnpkg.com/@yuxuan-zheng/hooks/-/hooks-0.0.3.tgz#13a12539f6e4da14a7176cc446dceee606ccef6d"
   integrity sha512-cGibrrUO/7t52gF7xedfgkx9rL4q2VNWRgm5Xx0E41PpQPmzIbgYaY9yXITQeIAy3x4CYBbzTByadagbaIUSMA==
 
-"@yuxuan-zheng/react-infinite-scroll@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@yuxuan-zheng/react-infinite-scroll/-/react-infinite-scroll-2.0.0.tgz#9e9a3d79c8a5ab06f5dc741bba53efc07d47d728"
-  integrity sha512-WmFkrIwNKngbIHBQUEv6MBl5yrE1N8ECCZ5HncnAY7t/ga+iTNdpUkaYzllAqF2E3jg+emTe6+bv22EjJRelYQ==
+"@yuxuan-zheng/react-infinite-scroll@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@yuxuan-zheng/react-infinite-scroll/-/react-infinite-scroll-2.0.1.tgz#02ab62389d0f6f471e798560a62e0dd035c25769"
+  integrity sha512-6N5MFD7mtHCSJ7g+V4OoFWn9429fThPiSzqtGWVvtCKk9SJ6NumXu94inRggCulvrO+btQwjb5ZCR8Es2gfmlA==
 
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"

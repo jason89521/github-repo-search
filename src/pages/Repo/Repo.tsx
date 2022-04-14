@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import type RepoInfo from 'types/RepoInfo';
 import type FileInfo from 'types/FileInfo';
 import withAnimation from 'hocs/withAnimation';
+import fetcher from 'lib/fetcher';
 import { Container, Heading, IconsBox } from './Repo.style';
 import BackPage from 'components/BackPage';
 import FilesList from 'components/FileList';
@@ -12,7 +13,6 @@ import Icon from 'components/Icon';
 import Skeleton from 'components/Skeleton';
 import Modal from 'components/Modal';
 
-const fetcher = (url: string) => fetch(url).then(res => res.json());
 const swrConfig = {
   dedupingInterval: 100 * 1000, // 100 seconds
   revalidateOnFocus: false,

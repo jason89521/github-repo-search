@@ -16,7 +16,11 @@ const Home = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalShow, setIsModalShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { data, error } = useSWR(username === '' ? null : `users/${username}/repos`, createFetcher(), swrConfig);
+  const { data, error, mutate } = useSWR(
+    username === '' ? null : `users/${username}/repos`,
+    createFetcher(),
+    swrConfig
+  );
 
   useEffect(() => {
     if (!data) return;
@@ -24,17 +28,21 @@ const Home = () => {
   }, [data, navigate, username]);
 
   useEffect(() => {
+    setIsSubmitting(false);
     if (!error) return;
 
     setIsModalShow(true);
     setErrorMessage(error.message);
-    setIsSubmitting(false);
   }, [error]);
 
-  const onFormSubmit = useCallback((username: string) => {
-    setIsSubmitting(true);
-    setUsername(username);
-  }, []);
+  const onFormSubmit = useCallback(
+    (username: string) => {
+      setIsSubmitting(true);
+      setUsername(username);
+      mutate();
+    },
+    [mutate]
+  );
 
   const handleDebounced = useCallback(async (debounced: string) => {
     try {

@@ -5,14 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import withAnimation from 'hocs/withAnimation';
 import { useAppDispatch } from 'redux/store';
 import { reset } from 'redux/repoListSlice';
-import { show, setMessage } from 'redux/modalSlice';
 import { fetchRepos, searchUser } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
+import Modal from 'components/Modal';
 
 const Home = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isModalShow, setIsModalShow] = useState(false);
   const dispatch = useAppDispatch();
 
   const onFormSubmit = useCallback(
@@ -22,12 +23,10 @@ const Home = () => {
       try {
         response = await fetchRepos(username);
       } catch (error) {
-        dispatch(show());
         if (axios.isAxiosError(error)) {
-          dispatch(setMessage(error.response?.data.message));
+          setIsModalShow(true);
           return;
         }
-        dispatch(setMessage('Unexpected error'));
         return;
       } finally {
         setIsSubmitting(false);
@@ -38,7 +37,7 @@ const Home = () => {
     },
     [dispatch, navigate]
   );
-  
+
   const handleDebounced = useCallback(async (debounced: string) => {
     try {
       const res = await searchUser(debounced);
@@ -50,16 +49,20 @@ const Home = () => {
 
   return (
     <Container>
+      <Modal
+        show={isModalShow}
+        message={'error'}
+        closeModal={() => {
+          setIsModalShow(false);
+        }}
+      />
+
       <Header>
         <StyledSvg href="icon-github"></StyledSvg>
         <h1>Github Repositories</h1>
       </Header>
 
-      <Form
-        isSubmitting={isSubmitting}
-        onFormSubmit={onFormSubmit}
-        onDebounced={handleDebounced}
-      />
+      <Form isSubmitting={isSubmitting} onFormSubmit={onFormSubmit} onDebounced={handleDebounced} />
     </Container>
   );
 };

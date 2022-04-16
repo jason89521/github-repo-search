@@ -1,13 +1,14 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import GlobalStyles from 'styles/global';
 import App from 'App';
 
-ReactDOM.render(
+const container = document.getElementById('root')!;
+const root = createRoot(container);
+root.render(
   <BrowserRouter>
     <GlobalStyles />
     <App />
-  </BrowserRouter>,
-  document.getElementById('root')
+  </BrowserRouter>
 );

@@ -60,7 +60,7 @@ The types may be used by other components are placed in this folder.
 
 Configures the structure of the router and shows the modal by the redux state.
 
-### `githubApi.tsx`
+### `githubApi.ts`
 
 This file contains an api to fetch data from github, including:
 

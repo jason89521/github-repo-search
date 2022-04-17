@@ -4,7 +4,6 @@ import useSWR from 'swr';
 
 import type RepoInfo from 'types/RepoInfo';
 import type FileInfo from 'types/FileInfo';
-import withAnimation from 'hocs/withAnimation';
 import createFetcher from 'lib/createFetcher';
 import swrConfig from 'lib/swrConfig';
 import { Container, Heading, IconsBox } from './Repo.style';
@@ -80,4 +79,4 @@ const Repo = () => {
   );
 };
 
-export default withAnimation(Repo);
+export default Repo;

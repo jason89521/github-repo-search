@@ -4,7 +4,6 @@ import InfiniteScroll from '@yuxuan-zheng/react-infinite-scroll';
 import useSWRInfinite from 'swr/infinite';
 
 import type RepoInfo from 'types/RepoInfo';
-import withAnimation from 'hocs/withAnimation';
 import createFetcher from 'lib/createFetcher';
 import swrConfig from 'lib/swrConfig';
 import { Heading, List, LoaderBox } from './Repos.style';
@@ -73,4 +72,4 @@ const Repos = () => {
   );
 };
 
-export default withAnimation(Repos);
+export default Repos;

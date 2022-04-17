@@ -40,10 +40,6 @@ So a component folder will looks like this:
     |-- SearchField.tsx
 ```
 
-### `hoc` folder
-
-This folder contains all high order component. There is only one file called `withAnimation.tsx` in this folder. This high order component aims to add animation to the wrapped component. It is easy to transform it to a normal component because it is really simple. I create this high order component just because I want to practice how to write a high order component.
-
 ### `lib` folder
 
 Some utilities created to use SWR easily.

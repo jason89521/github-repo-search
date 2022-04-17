@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 
-import withAnimation from 'hocs/withAnimation';
 import { searchUser } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
@@ -67,4 +66,4 @@ const Home = () => {
   );
 };
 
-export default withAnimation(Home);
+export default Home;

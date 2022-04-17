@@ -1,9 +1,32 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import Color from 'styles/color';
 import breakpoints from 'styles/breakpoints';
 
-export const Container = styled.div`
+export const panelVariants = {
+  init: {
+    opacity: 0,
+  },
+  in: {
+    x: ['20rem', '0rem'],
+    opacity: [0, 1],
+    transition: {
+      type: 'spring',
+      duration: 0.4,
+    },
+  },
+  out: {
+    x: '-20rem',
+    opacity: 0,
+    transition: {
+      type: 'spring',
+      duration: 0.4,
+    },
+  },
+};
+
+export const Container = styled(motion.div)`
   padding: 5rem 0;
   min-height: 100vh;
   display: flex;
@@ -16,7 +39,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Panel = styled.div`
+export const Panel = styled(motion.div)`
   width: 60%;
   padding: 5rem;
   border-radius: 10px;

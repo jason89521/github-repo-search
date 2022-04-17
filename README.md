@@ -90,3 +90,4 @@ Global styles and `BrowserRouter` are added in this file, and the `App` componen
 - [x] click outside of th dialog will close the modal
 - [x] do not use redux to handle modal
 - [x] use swr to replace redux
+- [x] remove high order component

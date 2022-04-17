@@ -60,10 +60,6 @@ The types may be used by other components are placed in this folder.
 
 Configures the structure of the router and shows the modal by the redux state.
 
-### `declaration.d.ts`
-
-Declare svg file as a module such that svg can be used in TypeScript.
-
 ### `githubApi.tsx`
 
 This file contains an api to fetch data from github, including:

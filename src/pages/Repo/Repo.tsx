@@ -24,19 +24,16 @@ const Repo = () => {
   const { data: files = [], error: filesError } = useSWR<FileInfo[]>(`${repoUrl}/contents`, createFetcher(), swrConfig);
 
   useEffect(() => {
-    if (!repoError && !filesError) return;
-
+    if (!repoError) return;
     setIsModalShow(true);
-    if (repoError) {
-      setErrorMessage(repoError.message);
-      return;
-    }
-    if (filesError) {
-      setErrorMessage(filesError.message);
-      return;
-    }
-    setErrorMessage('Unexpected error');
-  }, [repoError, filesError]);
+    setErrorMessage(repoError.message);
+  }, [repoError]);
+
+  useEffect(() => {
+    if (!filesError) return;
+    setIsModalShow(true);
+    setErrorMessage(filesError.message);
+  }, [filesError]);
 
   // if the repo have not been fetched yet, show the skeleton
   // such that the animation can be displayed

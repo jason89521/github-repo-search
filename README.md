@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+> This branch contains the improved version, to see the original version please check out origin branch.
+
 ## Features
 
 - List the list of repositories on one user's GitHub

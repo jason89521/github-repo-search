@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom';
 
-import { Container, Panel } from './Base.style';
+import { Container, Panel, panelVariants } from './Base.style';
 
 const Base = () => {
   return (
     <Container>
-      <Panel>
+      <Panel variants={panelVariants} initial="init" animate="in" exit="out">
         <Outlet />
       </Panel>
     </Container>

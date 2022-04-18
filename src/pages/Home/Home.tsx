@@ -1,44 +1,48 @@
-import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSWR from 'swr';
 
-import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch } from 'redux/store';
-import { reset } from 'redux/repoListSlice';
-import { show, setMessage } from 'redux/modalSlice';
-import { fetchRepos, searchUser } from 'githubApi';
+import { searchUser } from 'githubApi';
 import { Container, Header, StyledSvg } from './Home.style';
 import Form from 'components/Form';
+import Modal from 'components/Modal';
+import createFetcher from 'lib/createFetcher';
+import swrConfig from 'lib/swrConfig';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const dispatch = useAppDispatch();
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const { data, error, mutate } = useSWR(
+    username === '' ? null : `users/${username}/repos`,
+    createFetcher(),
+    swrConfig
+  );
+
+  useEffect(() => {
+    if (!data) return;
+    navigate(`users/${username}/repos`);
+  }, [data, navigate, username]);
+
+  useEffect(() => {
+    setIsSubmitting(false);
+    if (!error) return;
+
+    setIsModalShow(true);
+    setErrorMessage(error.message);
+  }, [error]);
 
   const onFormSubmit = useCallback(
-    async (username: string) => {
+    (username: string) => {
       setIsSubmitting(true);
-      let response;
-      try {
-        response = await fetchRepos(username);
-      } catch (error) {
-        dispatch(show());
-        if (axios.isAxiosError(error)) {
-          dispatch(setMessage(error.response?.data.message));
-          return;
-        }
-        dispatch(setMessage('Unexpected error'));
-        return;
-      } finally {
-        setIsSubmitting(false);
-      }
-
-      dispatch(reset(response.data));
-      navigate(`users/${username}/repos`);
+      setUsername(username);
+      mutate();
     },
-    [dispatch, navigate]
+    [mutate]
   );
-  
+
   const handleDebounced = useCallback(async (debounced: string) => {
     try {
       const res = await searchUser(debounced);
@@ -50,18 +54,16 @@ const Home = () => {
 
   return (
     <Container>
+      <Modal show={isModalShow} message={errorMessage} closeModal={() => setIsModalShow(false)} />
+
       <Header>
         <StyledSvg href="icon-github"></StyledSvg>
         <h1>Github Repositories</h1>
       </Header>
 
-      <Form
-        isSubmitting={isSubmitting}
-        onFormSubmit={onFormSubmit}
-        onDebounced={handleDebounced}
-      />
+      <Form isSubmitting={isSubmitting} onFormSubmit={onFormSubmit} onDebounced={handleDebounced} />
     </Container>
   );
 };
 
-export default withAnimation(Home);
+export default Home;

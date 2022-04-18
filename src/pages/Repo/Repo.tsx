@@ -1,65 +1,46 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import useSWR from 'swr';
 
-import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch } from 'redux/store';
-import { show, setMessage } from 'redux/modalSlice';
-import { useGetRepoQuery, useGetFilesQuery } from 'redux/repoApi';
+import type RepoInfo from 'types/RepoInfo';
+import type FileInfo from 'types/FileInfo';
+import createFetcher from 'lib/createFetcher';
+import swrConfig from 'lib/swrConfig';
 import { Container, Heading, IconsBox } from './Repo.style';
 import BackPage from 'components/BackPage';
 import FilesList from 'components/FileList';
 import Icon from 'components/Icon';
 import Skeleton from 'components/Skeleton';
+import Modal from 'components/Modal';
 
 const Repo = () => {
   const { username, repo } = useParams() as { username: string; repo: string };
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { data: repoInfo, error: repoError } = useGetRepoQuery({ username, repo });
-  const { data: files = [], error: filesError } = useGetFilesQuery({ username, repo });
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const repoUrl = `repos/${username}/${repo}`;
+  const { data: repoInfo, error: repoError } = useSWR<RepoInfo>(repoUrl, createFetcher(), swrConfig);
+  const { data: files = [], error: filesError } = useSWR<FileInfo[]>(`${repoUrl}/contents`, createFetcher(), swrConfig);
 
   useEffect(() => {
-    if (!repoError && !filesError) return;
+    if (!repoError) return;
+    setIsModalShow(true);
+    setErrorMessage(repoError.message);
+  }, [repoError]);
 
-    dispatch(show());
-    if (repoError && 'status' in repoError) {
-      dispatch(setMessage(repoError.data.message));
-      return;
-    }
-    if (filesError && 'data' in filesError) {
-      dispatch(setMessage(filesError.data.message));
-      return;
-    }
-    dispatch(setMessage('Unexpected error'));
-  }, [dispatch, repoError, filesError]);
+  useEffect(() => {
+    if (!filesError) return;
+    setIsModalShow(true);
+    setErrorMessage(filesError.message);
+  }, [filesError]);
 
   // if the repo have not been fetched yet, show the skeleton
   // such that the animation can be displayed
-  if (!repoInfo) {
-    return (
-      <BackPage onClickBack={() => navigate('../')}>
-        <Container>
-          <Skeleton height="5rem" />
-          <Skeleton height="3rem" />
-          <IconsBox>
-            <Skeleton width="3rem" height="1.5rem" />
-            <Skeleton width="3rem" height="1.5rem" />
-            <Skeleton width="3rem" height="1.5rem" />
-          </IconsBox>
-          <Skeleton height="2rem" />
-          <Skeleton height="2rem" />
-          <Skeleton height="2rem" />
-        </Container>
-      </BackPage>
-    );
-  }
-
-  const { full_name, description, html_url, stargazers_count, forks_count, open_issues_count } =
-    repoInfo;
-
-  return (
-    <BackPage onClickBack={() => navigate('../')}>
-      <Container>
+  let renderedContent: React.ReactNode = null;
+  if (repoInfo) {
+    const { full_name, description, html_url, stargazers_count, forks_count, open_issues_count } = repoInfo;
+    renderedContent = (
+      <>
         <Heading>
           <a href={html_url} target="_blank" rel="noreferrer">
             {full_name}
@@ -72,9 +53,30 @@ const Repo = () => {
           <Icon href="icon-issue" message={open_issues_count} />
         </IconsBox>
         <FilesList files={files} />
-      </Container>
+      </>
+    );
+  } else
+    renderedContent = (
+      <>
+        <Skeleton height="5rem" />
+        <Skeleton height="3rem" />
+        <IconsBox>
+          <Skeleton width="3rem" height="1.5rem" />
+          <Skeleton width="3rem" height="1.5rem" />
+          <Skeleton width="3rem" height="1.5rem" />
+        </IconsBox>
+        <Skeleton height="2rem" />
+        <Skeleton height="2rem" />
+        <Skeleton height="2rem" />
+      </>
+    );
+
+  return (
+    <BackPage onClickBack={() => navigate('../')}>
+      <Modal show={isModalShow} message={errorMessage} closeModal={() => setIsModalShow(false)} />
+      <Container>{renderedContent}</Container>
     </BackPage>
   );
 };
 
-export default withAnimation(Repo);
+export default Repo;

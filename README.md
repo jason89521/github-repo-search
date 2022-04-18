@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+> This branch contains the improved version, to see the original version please check out origin branch.
+
 ## Features
 
 - List the list of repositories on one user's GitHub
@@ -19,6 +21,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
    ```bash
    yarn
    yarn start
+   ```
+3. create a `.env.local` file in the root:
+   ```
+   REACT_APP_TOKEN=YOUR_GITHUB_TOKEN
    ```
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -40,21 +46,13 @@ So a component folder will looks like this:
     |-- SearchField.tsx
 ```
 
-### `hoc` folder
+### `lib` folder
 
-This folder contains all high order component. There is only one file called `withAnimation.tsx` in this folder. This high order component aims to add animation to the wrapped component. It is easy to transform it to a normal component because it is really simple. I create this high order component just because I want to practice how to write a high order component.
+Some utilities created to use SWR easily.
 
 ### `pages` folder
 
 The page components are placed in this folder. Their file structure looks like the components in `components` folder.
-
-### `Redux` folder
-
-This App use Redux to manage global states. There are 3 states in this App:
-
-- modal - determines whether the modal should show up and what message it should display.
-- reposList - stores the list of repositories.
-- repoApi - stores the information and files of one repository. Using RTK query to cache the fetched data.
 
 ### `styles` folder
 
@@ -68,28 +66,31 @@ The types may be used by other components are placed in this folder.
 
 Configures the structure of the router and shows the modal by the redux state.
 
-### `declaration.d.ts`
+### `githubApi.ts`
 
-Declare svg file as a module such that svg can be used in TypeScript.
+This file contains an api to fetch data from github, including:
 
-### `githubApi.tsx`
-
-This file contains some apis to fetch data from github, including:
-
-- Fetch the list of repositories.
 - Search the users that best match the search term.
 
 ### `index.tsx`
 
-Global styles, Redux `store` and `BrowserRouter` are added in this file, and the `App` component is rendered in this file also.
+Global styles and `BrowserRouter` are added in this file, and the `App` component is rendered in this file also.
 
 ## Built with
 
 - [React](https://github.com/facebook/react)
 - [React Router](https://github.com/remix-run/react-router)
-- [Redux Toolkit](https://github.com/reduxjs/redux-toolkit)
 - [styled-components](https://github.com/styled-components/styled-components)
 - [axios](https://github.com/axios/axios)
 - [framer motion](https://github.com/framer/motion)
+- [swr](https://github.com/vercel/swr)
 - [@yuxuan-zheng/hooks](https://github.com/jason89521/hooks)
 - [@yuxuan-zheng/react-infinite-scroll](https://github.com/jason89521/react-infinite-scroll)
+
+## Improvements
+
+- [x] click outside of th dialog will close the modal
+- [x] do not use redux to handle modal
+- [x] use swr to replace redux
+- [x] remove high order component
+- [x] use private token to raise the limits to 5000

@@ -1,56 +1,47 @@
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import InfiniteScroll from '@yuxuan-zheng/react-infinite-scroll';
-import axios from 'axios';
+import useSWRInfinite from 'swr/infinite';
 
-import withAnimation from 'hocs/withAnimation';
-import { useAppDispatch, useAppSelector } from 'redux/store';
-import { appendNext } from 'redux/repoListSlice';
-import { show, setMessage } from 'redux/modalSlice';
-import { fetchRepos } from 'githubApi';
+import type RepoInfo from 'types/RepoInfo';
+import createFetcher from 'lib/createFetcher';
+import swrConfig from 'lib/swrConfig';
 import { Heading, List, LoaderBox } from './Repos.style';
 import BackPage from 'components/BackPage';
 import RepoItem from 'components/RepoItem';
 import Loader from 'components/Loader';
+import Modal from 'components/Modal';
+
+const PAGE_SIZE = 10;
 
 const Repos = () => {
   const { username = '' } = useParams();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const { data: reposList, page } = useAppSelector(state => state.reposList);
-  const dispatch = useAppDispatch();
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const getKey = useCallback(
+    (pageIndex: number, previousPage: RepoInfo[]) => {
+      if (previousPage && previousPage.length < 10) return null;
+      return `users/${username}/repos?page=${pageIndex + 1}`;
+    },
+    [username]
+  );
+  const {
+    data = [],
+    error,
+    isValidating,
+    size,
+    setSize,
+  } = useSWRInfinite<RepoInfo[]>(getKey, createFetcher(), swrConfig);
 
   useEffect(() => {
-    // Only execute when this page is opened directly by typing url
-    if (reposList.length === 0) {
-      fetchNext();
+    if (error) {
+      setIsModalShow(true);
+      setErrorMessage(error.message);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [error]);
 
-  const fetchNext = async () => {
-    setIsLoading(true);
-    let response;
-    try {
-      response = await fetchRepos(username, page + 1);
-    } catch (error) {
-      dispatch(show());
-      if (axios.isAxiosError(error)) {
-        dispatch(setMessage(error.response?.data.message));
-        return;
-      }
-      dispatch(setMessage('Unexpected error'));
-      return;
-    } finally {
-      setIsLoading(false);
-    }
-
-    dispatch(appendNext(response.data));
-    // Since we fetch 10 repos every time we call the api,
-    // we know that there is no more repos if the response data is less than 10
-    setHasMore(response.data.length === 10);
-  };
+  const hasMore = data.length > 0 && data[data.length - 1].length === PAGE_SIZE;
 
   return (
     <BackPage
@@ -58,15 +49,20 @@ const Repos = () => {
         navigate('/');
       }}
     >
+      <Modal show={isModalShow} message={errorMessage} closeModal={() => setIsModalShow(false)} />
       <Heading>{username}</Heading>
-
       <List>
-        <InfiniteScroll isLoading={isLoading} hasMore={hasMore} next={fetchNext} threshold={1}>
-          {reposList.map(repo => {
-            return <RepoItem key={repo.id} repo={repo} />;
-          })}
+        <InfiniteScroll
+          isLoading={isValidating}
+          hasMore={hasMore}
+          next={() => {
+            setSize(size + 1);
+          }}
+          threshold={1}
+        >
+          {data.map(page => page.map(repo => <RepoItem key={repo.id} repo={repo} />))}
         </InfiniteScroll>
-        {isLoading && (
+        {isValidating && (
           <LoaderBox>
             <Loader />
           </LoaderBox>
@@ -76,4 +72,4 @@ const Repos = () => {
   );
 };
 
-export default withAnimation(Repos);
+export default Repos;

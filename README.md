@@ -20,6 +20,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
    yarn
    yarn start
    ```
+3. create a `.env.local` file in the root:
+   ```
+   REACT_APP_TOKEN=YOUR_GITHUB_TOKEN
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
@@ -87,3 +91,4 @@ Global styles and `BrowserRouter` are added in this file, and the `App` componen
 - [x] do not use redux to handle modal
 - [x] use swr to replace redux
 - [x] remove high order component
+- [x] use private token to raise the limits to 5000
